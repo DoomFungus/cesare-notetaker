@@ -6,4 +6,6 @@ spring:
     username: ${DATASOURCE_USERNAME}
 server:
   port: 80
+  error:
+    include-message: always
 
