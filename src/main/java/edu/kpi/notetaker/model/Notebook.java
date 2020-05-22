@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Data
@@ -16,7 +17,7 @@ import java.util.Collection;
 public class Notebook {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @Column(nullable = false)
     private String title;
     @Column(name = "enc_key")
@@ -24,10 +25,10 @@ public class Notebook {
     @Column(name = "creation_timestamp")
     private LocalDateTime creationTimestamp;
 
-    @OneToMany(mappedBy = "notebook", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Collection<Note> notes;
+    @OneToMany(mappedBy = "notebook", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Collection<Note> notes = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 }

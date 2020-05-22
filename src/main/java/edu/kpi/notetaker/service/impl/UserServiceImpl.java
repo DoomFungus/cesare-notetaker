@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -19,6 +18,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    @Override
+    public User findById(Integer id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFound("User not found"));
     }
 
     @Override
@@ -38,7 +43,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(User user) {
-        return null;
+    public User updateUserToken(Integer id, String token) {
+        User user = findById(id);
+        user.setRefreshToken(token);
+        return userRepository.save(user);
     }
 }
