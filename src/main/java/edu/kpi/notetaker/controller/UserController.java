@@ -22,16 +22,11 @@ public class UserController {
 
     @PostMapping
     UserOutputMessage saveUser(@RequestBody UserInputMessage message){
-        User user = userService.saveUser(message.toUser());
-        return UserOutputMessage.fromUser(user);
+        return UserOutputMessage.fromUser(userService.createUser(message.toUser()));
     }
 
     @GetMapping
     UserOutputMessage findUser(@RequestParam("username") String username){
-        return userService.findByUsername(username)
-                .map(UserOutputMessage::fromUser)
-                .orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")
-                );
+        return UserOutputMessage.fromUser(userService.findByUsername(username));
     }
 }

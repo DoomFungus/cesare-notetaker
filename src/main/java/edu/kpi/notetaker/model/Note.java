@@ -16,6 +16,7 @@ public class Note {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = false)
     private String title;
     @Lob
     @Basic(fetch = FetchType.LAZY)

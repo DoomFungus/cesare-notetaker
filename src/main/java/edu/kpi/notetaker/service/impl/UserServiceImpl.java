@@ -1,5 +1,7 @@
 package edu.kpi.notetaker.service.impl;
 
+import edu.kpi.notetaker.exceptionhandling.exceptions.EntityAlreadyExists;
+import edu.kpi.notetaker.exceptionhandling.exceptions.EntityNotFound;
 import edu.kpi.notetaker.model.User;
 import edu.kpi.notetaker.repository.UserRepository;
 import edu.kpi.notetaker.service.UserService;
@@ -20,13 +22,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFound("User not found"));
     }
 
     @Override
-    public User saveUser(User user) {
+    public User createUser(User user) {
+        userRepository.findByUsername(user.getUsername())
+                .ifPresent(x -> {
+                    throw new EntityAlreadyExists("User already exists");
+                });
         user.setCreationTimestamp(LocalDateTime.now());
         return userRepository.save(user);
+    }
+
+    @Override
+    public User updateUser(User user) {
+        return null;
     }
 }

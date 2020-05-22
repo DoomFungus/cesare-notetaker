@@ -17,6 +17,7 @@ public class Notebook {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = false)
     private String title;
     @Column(name = "enc_key")
     private String encryptionKey;
