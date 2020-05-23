@@ -5,7 +5,6 @@ import edu.kpi.notetaker.message.NoteOutputMessage;
 import edu.kpi.notetaker.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,21 +27,20 @@ public class NoteController {
         return NoteOutputMessage.fromNote(noteService.createNote(notebookId, message.toNote()));
     }
 
-    @GetMapping
-    public NoteOutputMessage findNote(@RequestParam("id") Integer id){
+    @GetMapping("/{id}")
+    public NoteOutputMessage findNote(@PathVariable("id") Integer id){
         return NoteOutputMessage.fromNote(noteService.findById(id));
     }
 
-    @PutMapping(value = "/content", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void updateNoteContent(@RequestParam("id") Integer noteId,
+    @PutMapping(value = "/{id}/content", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void updateNoteContent(@PathVariable("id") Integer noteId,
                                   @RequestBody MultipartFile content) throws IOException {
         noteService.updateNoteContent(noteId, content.getBytes());
     }
 
-    @GetMapping(value = "/content", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @GetMapping(value = "/{id}/content", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     @ResponseBody
-    public ByteArrayResource getNoteContent(@RequestParam("id") Integer id){
-        HttpHeaders headers = new HttpHeaders();
+    public ByteArrayResource getNoteContent(@PathVariable("id") Integer id){
         return new ByteArrayResource(noteService.getNoteContent(id));
     }
 }

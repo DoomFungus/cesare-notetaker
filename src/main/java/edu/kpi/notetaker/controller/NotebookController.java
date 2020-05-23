@@ -22,8 +22,8 @@ public class NotebookController {
         return NotebookOutputMessage.fromNotebook(notebookService.createNotebook(userId, message.toNotebook()));
     }
 
-    @GetMapping
-    public NotebookOutputMessage findNotebook(@RequestParam("id") Integer id){
+    @GetMapping("/{id}")
+    public NotebookOutputMessage findNotebook(@PathVariable("id") Integer id){
         return NotebookOutputMessage.fromNotebook(notebookService.findById(id));
     }
 }
