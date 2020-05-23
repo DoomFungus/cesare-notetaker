@@ -32,12 +32,9 @@ public class NotebookOutputMessage {
         message.setTitle(notebook.getTitle());
         message.setEncryptionKey(notebook.getEncryptionKey());
         message.setCreationTimestamp(notebook.getCreationTimestamp());
-        message.setNotes(notebook.getNotes()
-                .stream()
+        message.setNotes(notebook.getNotes().stream()
                 .map(NoteOutputMessage::identificationFromNote)
-                .collect(
-                        Collectors.toCollection(ArrayList::new)
-                )
+                .collect(Collectors.toCollection(ArrayList::new))
         );
         return message;
     }

@@ -1,6 +1,6 @@
 package edu.kpi.notetaker.service.impl;
 
-import edu.kpi.notetaker.exceptionhandling.exceptions.EntityNotFound;
+import edu.kpi.notetaker.exceptionhandling.exceptions.EntityNotFoundException;
 import edu.kpi.notetaker.model.Attachment;
 import edu.kpi.notetaker.model.Note;
 import edu.kpi.notetaker.repository.AttachmentRepository;
@@ -23,9 +23,9 @@ public class AttachmentServiceImpl implements AttachmentService {
     }
 
     @Override
-    public Attachment findById(Integer id) {
-        return attachmentRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFound("Attachment not found"));
+    public Attachment findById(Integer attachmentId) {
+        return attachmentRepository.findById(attachmentId)
+                .orElseThrow(() -> new EntityNotFoundException("Attachment with id=" + attachmentId + " is  not found"));
     }
 
     @Override
@@ -37,14 +37,14 @@ public class AttachmentServiceImpl implements AttachmentService {
     }
 
     @Override
-    public void updateAttachmentContent(Integer id, byte[] content) {
-        Attachment attachment = findById(id);
+    public void updateAttachmentContent(Integer attachmentId, byte[] content) {
+        Attachment attachment = findById(attachmentId);
         attachment.setContent(content);
         attachmentRepository.save(attachment);
     }
 
     @Override
-    public byte[] getAttachmentContent(Integer id) {
-        return findById(id).getContent();
+    public byte[] getAttachmentContent(Integer attachmentId) {
+        return findById(attachmentId).getContent();
     }
 }

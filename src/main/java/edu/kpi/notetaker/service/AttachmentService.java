@@ -3,11 +3,11 @@ package edu.kpi.notetaker.service;
 import edu.kpi.notetaker.model.Attachment;
 
 public interface AttachmentService {
-    Attachment findById(Integer id);
+    Attachment findById(Integer attachmentId);
 
     Attachment createAttachment(Integer noteId, Attachment attachment);
 
-    void updateAttachmentContent(Integer id, byte[] content);
+    void updateAttachmentContent(Integer attachmentId, byte[] content);
 
-    byte[] getAttachmentContent(Integer id);
+    byte[] getAttachmentContent(Integer attachmentId);
 }

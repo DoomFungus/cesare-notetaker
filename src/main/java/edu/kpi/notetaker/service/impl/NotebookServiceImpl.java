@@ -1,6 +1,6 @@
 package edu.kpi.notetaker.service.impl;
 
-import edu.kpi.notetaker.exceptionhandling.exceptions.EntityNotFound;
+import edu.kpi.notetaker.exceptionhandling.exceptions.EntityNotFoundException;
 import edu.kpi.notetaker.model.Notebook;
 import edu.kpi.notetaker.model.User;
 import edu.kpi.notetaker.repository.NotebookRepository;
@@ -23,9 +23,9 @@ public class NotebookServiceImpl implements NotebookService {
     }
 
     @Override
-    public Notebook findById(Integer id) {
-        return notebookRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFound("Notebook not found"));
+    public Notebook findById(Integer notebookId) {
+        return notebookRepository.findById(notebookId)
+                .orElseThrow(() -> new EntityNotFoundException("Notebook with id=" + notebookId + " is  not found"));
     }
 
     @Override

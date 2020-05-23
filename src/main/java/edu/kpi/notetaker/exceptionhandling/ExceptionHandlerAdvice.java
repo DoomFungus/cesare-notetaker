@@ -1,7 +1,7 @@
 package edu.kpi.notetaker.exceptionhandling;
 
-import edu.kpi.notetaker.exceptionhandling.exceptions.EntityAlreadyExists;
-import edu.kpi.notetaker.exceptionhandling.exceptions.EntityNotFound;
+import edu.kpi.notetaker.exceptionhandling.exceptions.EntityAlreadyExistsException;
+import edu.kpi.notetaker.exceptionhandling.exceptions.EntityNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = {EntityAlreadyExists.class})
+    @ExceptionHandler(value = {EntityAlreadyExistsException.class})
     protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
         return handleExceptionInternal(ex,
                 new ErrorMessage(LocalDateTime.now(), HttpStatus.CONFLICT, ex.getMessage(),
@@ -24,7 +24,7 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
                 new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 
-    @ExceptionHandler(value = {EntityNotFound.class})
+    @ExceptionHandler(value = {EntityNotFoundException.class})
     protected ResponseEntity<Object> handleNotFound(RuntimeException ex, WebRequest request) {
         return handleExceptionInternal(ex,
                 new ErrorMessage(LocalDateTime.now(), HttpStatus.NOT_FOUND, ex.getMessage(),

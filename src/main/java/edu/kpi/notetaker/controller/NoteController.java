@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/note")
@@ -36,6 +39,20 @@ public class NoteController {
                 .fromNote(noteService
                         .findById(id)
                 );
+    }
+
+    @GetMapping
+    public Collection<NoteOutputMessage> findNotesByTags(
+            @RequestParam("tag_id") Collection<Integer> tagIds){
+        return noteService.findByTagIds(tagIds).stream()
+                .map(NoteOutputMessage::fromNote)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    @PutMapping(value = "/{id}/tags")
+    public void updateNoteTags(@PathVariable("id") Integer noteId,
+                                  @RequestParam(name = "tag_id") Collection<Integer> tagIds) {
+        noteService.updateTags(noteId, tagIds);
     }
 
     @PutMapping(value = "/{id}/content", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

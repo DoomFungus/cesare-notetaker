@@ -27,12 +27,9 @@ public class UserOutputMessage {
         message.setId(user.getId());
         message.setUsername(user.getUsername());
         message.setCreationTimestamp(user.getCreationTimestamp());
-        message.setNotebooks(user.getNotebooks()
-                .stream()
+        message.setNotebooks(user.getNotebooks().stream()
                 .map(NotebookOutputMessage::identificationFromNotebook)
-                .collect(
-                        Collectors.toCollection(ArrayList::new)
-                )
+                .collect(Collectors.toCollection(ArrayList::new))
         );
         return message;
     }

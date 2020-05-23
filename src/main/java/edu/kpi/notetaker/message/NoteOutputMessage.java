@@ -23,19 +23,21 @@ public class NoteOutputMessage {
     private LocalDateTime creationTimestamp;
     @JsonProperty
     private Collection<AttachmentOutputMessage> attachments;
+    @JsonProperty
+    private Collection<TagOutputMessage> tags;
 
     public static NoteOutputMessage fromNote(Note note){
         NoteOutputMessage message = new NoteOutputMessage();
         message.setId(note.getId());
         message.setTitle(note.getTitle());
         message.setCreationTimestamp(note.getCreationTimestamp());
-        message.setAttachments(note.getAttachments()
-                .stream()
+        message.setAttachments(note.getAttachments().stream()
                 .map(AttachmentOutputMessage::identificationFromAttachment)
-                .collect(
-                        Collectors.toCollection(ArrayList::new)
-                )
+                .collect(Collectors.toCollection(ArrayList::new))
         );
+        message.setTags(note.getTags().stream()
+                .map(TagOutputMessage::identificationFromTag)
+                .collect(Collectors.toCollection(ArrayList::new)));
         return message;
     }
 

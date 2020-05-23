@@ -44,7 +44,8 @@ CREATE TABLE notes (
 CREATE TABLE tags (
                       id SERIAL PRIMARY KEY,
                       name varchar(100) UNIQUE NOT NULL,
-                      user_id int NOT NULL
+                      user_id int NOT NULL,
+                      creation_timestamp timestamp
 );
 
 CREATE TABLE notes_tags (
