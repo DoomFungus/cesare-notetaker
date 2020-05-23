@@ -18,11 +18,17 @@ public class UserController {
 
     @PostMapping
     public UserOutputMessage saveUser(@RequestBody UserInputMessage message){
-        return UserOutputMessage.fromUser(userService.createUser(message.toUser()));
+        return UserOutputMessage
+                .fromUser(userService
+                        .createUser(message.toUser())
+                );
     }
 
     @GetMapping
     public UserOutputMessage findUser(@RequestParam("username") String username){
-        return UserOutputMessage.fromUser(userService.findByUsername(username));
+        return UserOutputMessage
+                .fromUser(
+                        userService.findByUsername(username)
+                );
     }
 }

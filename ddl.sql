@@ -5,7 +5,6 @@ DROP TABLE IF EXISTS notebooks CASCADE;
 DROP TABLE IF EXISTS notes CASCADE;
 DROP TABLE IF EXISTS tags CASCADE;
 DROP TABLE IF EXISTS notes_tags CASCADE;
-DROP TABLE IF EXISTS users_tags CASCADE;
 DROP TABLE IF EXISTS attachments CASCADE;
 
 CREATE TABLE users (
@@ -44,7 +43,8 @@ CREATE TABLE notes (
 
 CREATE TABLE tags (
                       id SERIAL PRIMARY KEY,
-                      name varchar(100) UNIQUE NOT NULL
+                      name varchar(100) UNIQUE NOT NULL,
+                      user_id int NOT NULL
 );
 
 CREATE TABLE notes_tags (
@@ -52,16 +52,12 @@ CREATE TABLE notes_tags (
                             tag_id int
 );
 
-CREATE TABLE users_tags (
-                            user_id int,
-                            tag_id int
-);
-
 CREATE TABLE attachments (
                              id SERIAL PRIMARY KEY,
                              title varchar(256),
                              note_id int,
-                             content bytea
+                             content bytea,
+                             creation_timestamp timestamp
 );
 
 ALTER TABLE notebooks ADD FOREIGN KEY (user_id) REFERENCES users (id);
@@ -72,9 +68,7 @@ ALTER TABLE notes_tags ADD FOREIGN KEY (note_id) REFERENCES notes (id);
 
 ALTER TABLE notes_tags ADD FOREIGN KEY (tag_id) REFERENCES tags (id);
 
-ALTER TABLE users_tags ADD FOREIGN KEY (user_id) REFERENCES users (id);
-
-ALTER TABLE users_tags ADD FOREIGN KEY (tag_id) REFERENCES tags (id);
+ALTER TABLE tags ADD FOREIGN KEY (user_id) REFERENCES users (id);
 
 ALTER TABLE users_roles ADD FOREIGN KEY (user_id) REFERENCES users (id);
 
@@ -82,4 +76,4 @@ ALTER TABLE users_roles ADD FOREIGN KEY (role_id) REFERENCES roles (id);
 
 ALTER TABLE attachments ADD FOREIGN KEY (note_id) REFERENCES notes (id);
 
-CREATE INDEX user_name ON users (name);
+CREATE INDEX user_name ON users (username);

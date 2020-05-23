@@ -19,11 +19,17 @@ public class NotebookController {
     @PostMapping
     public NotebookOutputMessage saveNotebook(@RequestParam("user_id") Integer userId,
                                        @RequestBody NotebookInputMessage message){
-        return NotebookOutputMessage.fromNotebook(notebookService.createNotebook(userId, message.toNotebook()));
+        return NotebookOutputMessage
+                .fromNotebook(notebookService
+                        .createNotebook(userId, message.toNotebook())
+                );
     }
 
     @GetMapping("/{id}")
     public NotebookOutputMessage findNotebook(@PathVariable("id") Integer id){
-        return NotebookOutputMessage.fromNotebook(notebookService.findById(id));
+        return NotebookOutputMessage
+                .fromNotebook(
+                        notebookService.findById(id)
+                );
     }
 }

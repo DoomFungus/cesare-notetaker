@@ -24,12 +24,18 @@ public class NoteController {
     @PostMapping
     public NoteOutputMessage saveNote(@RequestParam("notebook_id") Integer notebookId,
                                @RequestBody NoteInputMessage message){
-        return NoteOutputMessage.fromNote(noteService.createNote(notebookId, message.toNote()));
+        return NoteOutputMessage
+                .fromNote(noteService
+                        .createNote(notebookId, message.toNote())
+                );
     }
 
     @GetMapping("/{id}")
     public NoteOutputMessage findNote(@PathVariable("id") Integer id){
-        return NoteOutputMessage.fromNote(noteService.findById(id));
+        return NoteOutputMessage
+                .fromNote(noteService
+                        .findById(id)
+                );
     }
 
     @PutMapping(value = "/{id}/content", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
