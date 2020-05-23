@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Dserver.port=$PORT -jar notetacker-backend/target/cesare-notetaker.jar
+web: java $JAVA_OPTS -Dserver.port=$PORT -jar notetaker-backend/target/cesare-notetaker.jar
