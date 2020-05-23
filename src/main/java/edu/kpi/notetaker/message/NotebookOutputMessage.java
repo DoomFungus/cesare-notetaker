@@ -1,8 +1,8 @@
 package edu.kpi.notetaker.message;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import edu.kpi.notetaker.model.Note;
 import edu.kpi.notetaker.model.Notebook;
 import lombok.Data;
 
@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class NotebookOutputMessage {
     @JsonProperty
     private Integer id;
@@ -20,10 +21,10 @@ public class NotebookOutputMessage {
     @JsonProperty(value = "encryption_key")
     private String encryptionKey;
     @JsonProperty("creation_timestamp")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime creationTimestamp;
-    @JsonProperty("note_ids")
-    private Collection<Integer> noteIds;
+    @JsonProperty("notes")
+    private Collection<NoteOutputMessage> notes;
 
     public static NotebookOutputMessage fromNotebook(Notebook notebook){
         NotebookOutputMessage message = new NotebookOutputMessage();
@@ -31,13 +32,20 @@ public class NotebookOutputMessage {
         message.setTitle(notebook.getTitle());
         message.setEncryptionKey(notebook.getEncryptionKey());
         message.setCreationTimestamp(notebook.getCreationTimestamp());
-        message.setNoteIds(notebook.getNotes()
+        message.setNotes(notebook.getNotes()
                 .stream()
-                .map(Note::getId)
+                .map(NoteOutputMessage::identificationFromNote)
                 .collect(
                         Collectors.toCollection(ArrayList::new)
                 )
         );
+        return message;
+    }
+
+    public static NotebookOutputMessage identificationFromNotebook(Notebook notebook){
+        NotebookOutputMessage message = new NotebookOutputMessage();
+        message.setId(notebook.getId());
+        message.setTitle(notebook.getTitle());
         return message;
     }
 }

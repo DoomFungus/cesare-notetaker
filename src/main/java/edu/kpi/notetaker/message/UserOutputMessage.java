@@ -2,7 +2,6 @@ package edu.kpi.notetaker.message;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import edu.kpi.notetaker.model.Notebook;
 import edu.kpi.notetaker.model.User;
 import lombok.Data;
 
@@ -18,19 +17,19 @@ public class UserOutputMessage {
     @JsonProperty
     private String username;
     @JsonProperty("creation_timestamp")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime creationTimestamp;
-    @JsonProperty("notebook_ids")
-    private Collection<Integer> notebookIds;
+    @JsonProperty("notebooks")
+    private Collection<NotebookOutputMessage> notebooks;
 
     public static UserOutputMessage fromUser(User user){
         UserOutputMessage message = new UserOutputMessage();
         message.setId(user.getId());
         message.setUsername(user.getUsername());
         message.setCreationTimestamp(user.getCreationTimestamp());
-        message.setNotebookIds(user.getNotebooks()
+        message.setNotebooks(user.getNotebooks()
                 .stream()
-                .map(Notebook::getId)
+                .map(NotebookOutputMessage::identificationFromNotebook)
                 .collect(
                         Collectors.toCollection(ArrayList::new)
                 )
