@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import * as ClassicEditor from 'ckeditor5-build-cesare-notetaker';
+import * as ClassicEditor from 'ckeditor5-build-notetaker';
 
 @Component({
   selector: 'app-root',
