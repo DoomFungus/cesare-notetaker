@@ -1,0 +1,7 @@
+<span class="col-9">{{notebook.title}}</span>
+<button class="col-1"(click)="loadNotes()">notes</button>
+<div class="container-fluid text-left">
+  <div class="ml-3" *ngFor="let note of notebook.notes">
+    <app-note [note]="note"></app-note>
+  </div>
+</div>
