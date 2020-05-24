@@ -45,3 +45,4 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+/ckeditor5-build-cesare-notetaker/node_modules/
