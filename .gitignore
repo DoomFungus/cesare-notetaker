@@ -29,3 +29,4 @@ build/
 
 ### VS Code ###
 .vscode/
+/notetaker-frontend/ckeditor5-build-cesare-notetaker/build/
