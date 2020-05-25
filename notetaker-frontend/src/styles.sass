@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~materialize-css/sass/components/_color-variables.scss"
 $primary-color: color("amber", "lighten-1") !default
+$navbar-height-mobile: 60px
+$navbar-height: 60px
 @import '~materialize-css/sass/materialize'
 
 .no-margin-top
@@ -14,3 +16,11 @@ $primary-color: color("amber", "lighten-1") !default
 
 .background-color-transparent
   background-color: transparent !important
+
+.ck.ck-content ul, .ck.ck-content ul li
+  list-style-type: inherit
+
+.ck.ck-content ul
+  padding-left: 40px
+
+
