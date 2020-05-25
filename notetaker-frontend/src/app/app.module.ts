@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {HierarchyModule} from "./hierarchy/hierarchy.module";
 
 @NgModule({
   declarations: [
@@ -12,7 +14,9 @@ import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
   imports: [
     CKEditorModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule,
+    HierarchyModule
   ],
   providers: [],
   bootstrap: [AppComponent]
