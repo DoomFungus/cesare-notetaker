@@ -48,13 +48,14 @@
                     </execution>
 
                     <execution>
-                        <id>npm run build</id>
+                        <id>prod</id>
                         <goals>
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>run build --prod</arguments>
+                            <arguments>run-script prod</arguments>
                         </configuration>
+                        <phase>generate-resources</phase>
                     </execution>
                 </executions>
             </plugin>
