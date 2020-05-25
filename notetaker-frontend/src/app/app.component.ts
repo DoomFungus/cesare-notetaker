@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import * as ClassicEditor from 'cesare-notetaker-editor-build';
+
 
 @Component({
   selector: 'app-root',
@@ -8,11 +8,5 @@ import * as ClassicEditor from 'cesare-notetaker-editor-build';
 })
 export class AppComponent {
   title = 'notetaker-frontend';
-  public Editor = ClassicEditor;
-  ckConfig = {
-    image: {
-      styles: ['full', 'alignLeft', 'alignRight'],
-      toolbar: [ 'imageStyle:full', 'imageStyle:alignRight', 'imageStyle:alignLeft' ]
-    }
-  };
+
 }
