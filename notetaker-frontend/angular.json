@@ -28,8 +28,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.sass",
-              "node_modules/materialize-css/dist/css/materialize.css"
+              "src/styles.sass"
             ],
             "scripts": [
               "node_modules/hammerjs/hammer.js",
