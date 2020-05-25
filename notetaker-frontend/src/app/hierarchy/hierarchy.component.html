@@ -1,5 +1,14 @@
-<div class="container-fluid text-left">
-  <div *ngFor="let notebook of notebooks">
-    <app-notebook [notebook]="notebook"></app-notebook>
-  </div>
-</div>
+<ul id="notes-sidenav" class="sidenav sidenav-fixed collapsible">
+  <li>
+    <div class="card-panel no-margin-top amber lighten-2"><h3>My Notebooks</h3></div>
+  </li>
+  <li *ngFor="let notebook of notebooks">
+    <div class="collapsible-header">
+      <i class="material-icons">book</i>
+      <span>{{notebook.title}}</span>
+    </div>
+    <div class="collapsible-body container">
+      <app-notebook  [notes]="notebook.notes"></app-notebook>
+    </div>
+  </li>
+</ul>
