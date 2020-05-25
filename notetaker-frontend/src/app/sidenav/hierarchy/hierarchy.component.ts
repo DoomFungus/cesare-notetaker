@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Notebook} from "./notebook/notebook";
 import * as M from "materialize-css/dist/js/materialize"
+import {HierarchyService} from "./hierarchy.service";
 
 @Component({
   selector: 'app-hierarchy',
@@ -11,14 +12,19 @@ export class HierarchyComponent implements OnInit {
 
   notebooks: Notebook[] = []
 
-  constructor() { }
+  constructor(private hierarchyService:HierarchyService) {
+
+  }
 
   ngOnInit(): void {
     const self = this;
-    for(let _i of [1, 2, 3]){
-      const notebook = {id:_i, title:_i.toString(), notes:[]};
-      this.notebooks.push(notebook)
-    }
+    this.hierarchyService.getUser("123")
+      .subscribe((user) => {
+        console.log(user.toString())
+        for(let notebook of user.notebooks){
+          this.notebooks.push(notebook)
+        }
+      })
     document.addEventListener('DOMContentLoaded', function() {
       const elems = document.querySelectorAll('.sidenav');
       const instances = M.Sidenav.init(elems, {});
@@ -36,11 +42,10 @@ export class HierarchyComponent implements OnInit {
   }
 
   loadData(index){
-    for(let _n of [1, 2]){
-      this.notebooks[index]
-          .notes
-          .push({id:_n, title:_n.toString(), content:_n.toString()})
-    }
+    this.hierarchyService.getNotebook(this.notebooks[index].id.toString())
+      .subscribe((notebook) => {
+        this.notebooks[index].notes = notebook.notes
+      })
   }
 
 }

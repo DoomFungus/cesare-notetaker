@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {HierarchyComponent} from "./hierarchy.component";
 import {NotebookComponent} from "./notebook/notebook.component";
+import {HttpClientModule} from "@angular/common/http";
+import {HierarchyService} from "./hierarchy.service";
 
 
 
@@ -14,7 +16,11 @@ import {NotebookComponent} from "./notebook/notebook.component";
     HierarchyComponent
   ],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+    HttpClientModule
+  ],
+  providers: [{
+    provide:HierarchyService
+  }]
 })
 export class HierarchyModule { }
