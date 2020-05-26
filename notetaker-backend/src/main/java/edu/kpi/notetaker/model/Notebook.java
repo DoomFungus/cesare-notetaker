@@ -20,8 +20,6 @@ public class Notebook {
     private Integer id;
     @Column(nullable = false)
     private String title;
-    @Column(name = "enc_key")
-    private String encryptionKey;
     @Column(name = "creation_timestamp")
     private LocalDateTime creationTimestamp;
 

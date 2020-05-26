@@ -8,13 +8,10 @@ import lombok.Data;
 public class NotebookInputMessage {
     @JsonProperty
     private String title;
-    @JsonProperty(value = "encryption_key")
-    private String encryptionKey;
 
     public Notebook toNotebook(){
         Notebook notebook = new Notebook();
         notebook.setTitle(this.getTitle());
-        notebook.setEncryptionKey(this.encryptionKey);
         return notebook;
     }
 }

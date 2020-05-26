@@ -7,13 +7,64 @@
       <i class="material-icons">book</i>
       <span>{{notebook.title}}</span>
     </div>
-    <div class="collapsible-body double-padding-left background-color-transparent">
+    <div class="collapsible-body background-color-transparent">
       <ul class="background-color-transparent">
-        <li *ngFor="let note of notebook.notes" class="sidenav-close background-color-transparent" (click)="onNoteClick(note.id)">
-          <i class="material-icons small-margin-right background-color-transparent">note</i>
+        <li *ngFor="let note of notebook.notes" (click)="onNoteClick(note.id, note.title)"
+            class="double-padding-left width-parent sidenav-close waves-effect waves-light background-color-transparent-hover">
+          <i class="material-icons small-margin-right collapsible-icon">note</i>
           <span>{{note.title}}</span>
+        </li>
+        <li>
+          <div data-target="new-note-modal" class="double-margin-left sidenav-close  modal-trigger
+          background-color-transparent btn-floating btn-small waves-effect waves-light amber darken-2"
+               (click)="onAddNoteStart(notebook.id)"><i class="material-icons">add</i></div>
         </li>
       </ul>
     </div>
   </li>
+  <li>
+    <div data-target="new-notebook-modal" class="modal-trigger btn-floating btn waves-effect waves-light amber darken-2 small-margin-left"><i class="material-icons">add</i></div>
+  </li>
 </ul>
+
+<div id="new-notebook-modal" class="modal">
+  <div class="modal-content">
+    <h4>Create new notebook</h4>
+    <div class="row">
+      <form class="col s12">
+        <div class="row modal-form-row">
+          <div class="input-field col s12">
+            <input id="notebook_title" type="text" class="validate" [(ngModel)]="new_notebook_title" name="notebook_title">
+            <label for="notebook_title">New notebook title</label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a class=" modal-action modal-close waves-effect waves-green btn-flat"
+       (click)="onAddNotebookFinish()">Submit</a>
+    <a class=" modal-action modal-close waves-effect waves-red btn-flat">Cancel</a>
+  </div>
+</div>
+
+<div id="new-note-modal" class="modal">
+  <div class="modal-content">
+    <h4>Create new note</h4>
+    <div class="row">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="note_title" type="text" class="validate" [(ngModel)]="new_note_title" name="note_title">
+            <label for="note_title">New note title</label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a class=" modal-action modal-close waves-effect waves-green btn-flat"
+       (click)="onAddNoteFinish()">Submit</a>
+    <a class=" modal-action modal-close waves-effect waves-red btn-flat">Cancel</a>
+  </div>
+</div>

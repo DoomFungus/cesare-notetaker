@@ -10,7 +10,7 @@ export class AppComponent {
   title = 'notetaker-frontend';
   active_note_id: number
 
-  onNoteChosen(note_id: number){
-    this.active_note_id = note_id
+  onNoteChosen(event: [number, string]){
+    this.active_note_id = event[0]
   }
 }

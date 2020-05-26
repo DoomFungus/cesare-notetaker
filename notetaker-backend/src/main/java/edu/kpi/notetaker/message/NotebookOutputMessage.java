@@ -18,8 +18,6 @@ public class NotebookOutputMessage {
     private Integer id;
     @JsonProperty
     private String title;
-    @JsonProperty(value = "encryption_key")
-    private String encryptionKey;
     @JsonProperty("creation_timestamp")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime creationTimestamp;
@@ -30,7 +28,6 @@ public class NotebookOutputMessage {
         NotebookOutputMessage message = new NotebookOutputMessage();
         message.setId(notebook.getId());
         message.setTitle(notebook.getTitle());
-        message.setEncryptionKey(notebook.getEncryptionKey());
         message.setCreationTimestamp(notebook.getCreationTimestamp());
         message.setNotes(notebook.getNotes().stream()
                 .map(NoteOutputMessage::identificationFromNote)

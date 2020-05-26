@@ -36,7 +36,7 @@ public class Note {
             name = "notes_tags",
             joinColumns = @JoinColumn(name = "note_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private Collection<Tag> tags;
+    private Collection<Tag> tags = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "notebook_id", nullable = false)

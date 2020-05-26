@@ -29,7 +29,6 @@ CREATE TABLE notebooks (
                            id SERIAL PRIMARY KEY,
                            user_id int,
                            title varchar(400) NOT NULL,
-                           enc_key varchar(128),
                            creation_timestamp timestamp
 );
 

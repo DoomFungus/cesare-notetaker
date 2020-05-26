@@ -10,6 +10,7 @@ import {HierarchyComponent} from "./sidenav/hierarchy/hierarchy.component";
 import {HttpClientModule} from "@angular/common/http";
 import {HierarchyService} from "./sidenav/hierarchy/hierarchy.service";
 import {FormsModule} from "@angular/forms";
+import * as M from 'materialize-css/dist/js/materialize';
 
 @NgModule({
   declarations: [
@@ -25,9 +26,10 @@ import {FormsModule} from "@angular/forms";
     AppRoutingModule,
     FormsModule
   ],
-  providers: [{
-    provide:HierarchyService
-  }],
+  providers: [
+    {provide:HierarchyService},
+    {provide:'M', useValue:M}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
