@@ -73,7 +73,6 @@ ClassicEditor.defaultConfig = {
 			'|',
 			'bold',
 			'italic',
-			'link',
 			'alignment',
 			'bulletedList',
 			'numberedList',
@@ -81,11 +80,13 @@ ClassicEditor.defaultConfig = {
 			'indent',
 			'outdent',
 			'|',
+			'undo',
+			'redo',
+			'|',
+			'link',
 			'imageUpload',
 			'blockQuote',
-			'insertTable',
-			'undo',
-			'redo'
+			'insertTable'
 		]
 	},
 	image: {
