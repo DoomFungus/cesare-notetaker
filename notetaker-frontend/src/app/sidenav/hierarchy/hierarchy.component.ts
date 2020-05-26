@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Notebook} from "./notebook/notebook";
+import {Notebook} from "./notebook";
 import * as M from "materialize-css/dist/js/materialize"
 import {HierarchyService} from "./hierarchy.service";
 

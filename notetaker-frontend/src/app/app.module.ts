@@ -3,22 +3,29 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {HierarchyModule} from "./sidenav/hierarchy/hierarchy.module";
-import {EditorModule} from "./editor/editor.module";
-import {HeaderModule} from "./header/header.module";
+import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
+import {EditorComponent} from "./editor/editor.component";
+import {HeaderComponent} from "./header/header.component";
+import {HierarchyComponent} from "./sidenav/hierarchy/hierarchy.component";
+import {HttpClientModule} from "@angular/common/http";
+import {HierarchyService} from "./sidenav/hierarchy/hierarchy.service";
 
 @NgModule({
   declarations: [
     AppComponent,
+    EditorComponent,
+    HeaderComponent,
+    HierarchyComponent
   ],
   imports: [
     BrowserModule,
-    EditorModule,
-    AppRoutingModule,
-    HierarchyModule,
-    HeaderModule
+    CKEditorModule,
+    HttpClientModule,
+    AppRoutingModule
   ],
-  providers: [],
+  providers: [{
+    provide:HierarchyService
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

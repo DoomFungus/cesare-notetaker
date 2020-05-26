@@ -8,7 +8,12 @@
       <span>{{notebook.title}}</span>
     </div>
     <div class="collapsible-body container background-color-transparent">
-      <app-notebook  [notes]="notebook.notes" class="background-color-transparent"></app-notebook>
+      <ul class="background-color-transparent">
+        <li *ngFor="let note of notebook.notes" class="sidenav-close background-color-transparent">
+          <i class="material-icons small-margin-right background-color-transparent">note</i>
+          <span>{{note.title}}</span>
+        </li>
+      </ul>
     </div>
   </li>
 </ul>
