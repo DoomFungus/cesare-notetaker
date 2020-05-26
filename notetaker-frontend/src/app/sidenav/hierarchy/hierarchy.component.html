@@ -9,7 +9,7 @@
     </div>
     <div class="collapsible-body container background-color-transparent">
       <ul class="background-color-transparent">
-        <li *ngFor="let note of notebook.notes" class="sidenav-close background-color-transparent">
+        <li *ngFor="let note of notebook.notes" class="sidenav-close background-color-transparent" (click)="onNoteClick(note.id)">
           <i class="material-icons small-margin-right background-color-transparent">note</i>
           <span>{{note.title}}</span>
         </li>

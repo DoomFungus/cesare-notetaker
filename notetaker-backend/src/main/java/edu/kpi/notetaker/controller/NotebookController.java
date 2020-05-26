@@ -6,6 +6,10 @@ import edu.kpi.notetaker.service.NotebookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/notebook")
 public class NotebookController {
@@ -31,5 +35,12 @@ public class NotebookController {
                 .fromNotebook(
                         notebookService.findById(id)
                 );
+    }
+
+    @GetMapping
+    public Collection<NotebookOutputMessage> findNotebooksByUser(@RequestParam("user_id") Integer id){
+        return notebookService.findAllByUserId(id).stream()
+                .map(NotebookOutputMessage::fromNotebook)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 }

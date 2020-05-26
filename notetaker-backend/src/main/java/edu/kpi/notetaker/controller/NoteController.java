@@ -64,6 +64,8 @@ public class NoteController {
     @GetMapping(value = "/{id}/content", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     @ResponseBody
     public ByteArrayResource getNoteContent(@PathVariable("id") Integer id){
-        return new ByteArrayResource(noteService.getNoteContent(id));
+        byte[] content = noteService.getNoteContent(id);
+        if(content == null) content = new byte[0];
+        return new ByteArrayResource(content);
     }
 }

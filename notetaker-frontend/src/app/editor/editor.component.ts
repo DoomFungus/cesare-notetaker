@@ -1,17 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import * as ClassicEditor from 'cesare-notetaker-editor-build';
+import {EditorService} from "./editor.service";
 
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.sass']
 })
-export class EditorComponent implements OnInit {
+export class EditorComponent implements OnInit, OnChanges{
 
-  constructor() { }
+  @Input()
+  note_id:number
+
+  public model = {
+    editorData: '<p>Hello, world!</p>'
+  };
+
+  constructor(private editorService:EditorService) { }
 
   ngOnInit(): void {
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const self = this;
+    if (this.note_id !== undefined){
+      this.editorService
+        .getNoteContent(this.note_id.toString())
+        .subscribe(value => {
+          value.text()
+            .then(text => self.model.editorData = text)
+        })
+    }
+  }
+
+
 
   public Editor = ClassicEditor;
   ckConfig = {

@@ -1,6 +1,5 @@
 package edu.kpi.notetaker.repository;
 
-
 import edu.kpi.notetaker.model.Tag;
 import edu.kpi.notetaker.model.User;
 import org.springframework.data.repository.CrudRepository;

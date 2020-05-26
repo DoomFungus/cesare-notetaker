@@ -8,5 +8,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'notetaker-frontend';
+  active_note_id: number
 
+  onNoteChosen(note_id: number){
+    this.active_note_id = note_id
+  }
 }

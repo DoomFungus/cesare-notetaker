@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 @Service
 public class NotebookServiceImpl implements NotebookService {
@@ -34,5 +35,11 @@ public class NotebookServiceImpl implements NotebookService {
         notebook.setUser(author);
         notebook.setCreationTimestamp(LocalDateTime.now());
         return notebookRepository.save(notebook);
+    }
+
+    @Override
+    public Collection<Notebook> findAllByUserId(Integer userId) {
+        User author = userService.findById(userId);
+        return notebookRepository.findAllByUser(author);
     }
 }

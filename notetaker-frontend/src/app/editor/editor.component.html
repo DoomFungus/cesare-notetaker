@@ -1,4 +1,4 @@
 <div class="editor" role="main">
-  <ckeditor [editor]="Editor" [config]="ckConfig" data="<p>Hello, world!</p>"></ckeditor>
+  <ckeditor [(ngModel)]="model.editorData" [editor]="Editor" [config]="ckConfig" data="<p>Hello, world!</p>"></ckeditor>
 </div>
 

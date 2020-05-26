@@ -9,6 +9,7 @@ import {HeaderComponent} from "./header/header.component";
 import {HierarchyComponent} from "./sidenav/hierarchy/hierarchy.component";
 import {HttpClientModule} from "@angular/common/http";
 import {HierarchyService} from "./sidenav/hierarchy/hierarchy.service";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {HierarchyService} from "./sidenav/hierarchy/hierarchy.service";
     BrowserModule,
     CKEditorModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [{
     provide:HierarchyService
