@@ -9,5 +9,7 @@ public interface NotebookService {
 
     Notebook createNotebook(Integer userId, Notebook notebook);
 
+    void deleteNotebook(Integer notebookId);
+
     Collection<Notebook> findAllByUserId(Integer userId);
 }

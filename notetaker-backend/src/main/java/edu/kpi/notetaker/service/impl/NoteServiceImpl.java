@@ -50,6 +50,11 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
+    public void deleteNote(Integer noteId) {
+        noteRepository.deleteById(noteId);
+    }
+
+    @Override
     public void updateNoteContent(Integer noteId, byte[] content) {
         Note note = findById(noteId);
         note.setContent(content);

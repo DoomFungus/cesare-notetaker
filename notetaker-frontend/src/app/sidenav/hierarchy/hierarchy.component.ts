@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {Notebook} from "./notebook";
 import {HierarchyService} from "./hierarchy.service";
+import {element} from "protractor";
 
 @Component({
   selector: 'app-hierarchy',
@@ -19,6 +20,9 @@ export class HierarchyComponent implements OnInit {
   active_notebook_id:number
   new_note_title:string
   new_notebook_title:string
+
+  deleted_notebook_id:number
+  deleted_note_id:number
 
   constructor(private hierarchyService:HierarchyService, @Inject('M') private M: any) {
 
@@ -43,6 +47,10 @@ export class HierarchyComponent implements OnInit {
       const elems = document.querySelectorAll('.modal');
       const instances = self.M.Modal.init(elems, {});
     });
+    document.addEventListener('DOMContentLoaded', function() {
+      let elems = document.querySelectorAll('.dropdown-trigger');
+      let instances = self.M.Dropdown.init(elems, {});
+    });
   }
 
   onNoteClick(note_id:number, note_title){
@@ -60,7 +68,6 @@ export class HierarchyComponent implements OnInit {
     this.hierarchyService
       .postNote(this.active_notebook_id, this.new_note_title)
       .subscribe((note => {
-        self.onNoteClick(note.id, note.title)
         self.notebooks.find((element) => element.id===self.active_notebook_id)
           .notes.push({id: note.id, title: note.title, content: ""})
       }))
@@ -73,5 +80,43 @@ export class HierarchyComponent implements OnInit {
       .subscribe((notebook => {
         self.notebooks.push({id: notebook.id, title: notebook.title, notes: []})
       }))
+  }
+
+  openDeleteNotebookModal(event:Event, notebook_id){
+    event.stopPropagation()
+    this.deleted_notebook_id = notebook_id
+    this.M.Modal.getInstance(document.getElementById("delete-notebook-modal")).open()
+  }
+
+  openDeleteNoteModal(event:Event, note_id, notebook_id){
+    event.stopPropagation()
+    this.deleted_note_id = note_id
+    this.active_notebook_id = notebook_id
+    this.M.Modal.getInstance(document.getElementById("delete-note-modal")).open()
+  }
+
+  onDeleteNotebookFinish(){
+    const self = this;
+    this.hierarchyService
+      .deleteNotebook(this.deleted_notebook_id)
+      .subscribe(value => {
+        self.notebooks = self.notebooks
+          .filter(element => {
+            return element.id !== self.deleted_notebook_id
+          })
+      })
+  }
+
+  onDeleteNoteFinish(){
+    const self = this;
+    this.hierarchyService
+      .deleteNote(this.deleted_note_id)
+      .subscribe(value => {
+        const notebook = self.notebooks.find((element) => element.id===self.active_notebook_id)
+        notebook.notes = notebook.notes
+          .filter(element => {
+            return element.id !== self.deleted_note_id
+          })
+      })
   }
 }

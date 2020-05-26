@@ -41,6 +41,11 @@ public class NoteController {
                 );
     }
 
+    @DeleteMapping("/{id}")
+    public void deleteNote(@PathVariable("id") Integer id){
+        noteService.deleteNote(id);
+    }
+
     @GetMapping
     public Collection<NoteOutputMessage> findNotesByTags(
             @RequestParam("tag_id") Collection<Integer> tagIds){

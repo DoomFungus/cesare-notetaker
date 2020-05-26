@@ -37,6 +37,11 @@ public class NotebookController {
                 );
     }
 
+    @DeleteMapping("/{id}")
+    public void deleteNotebook(@PathVariable("id") Integer id){
+        notebookService.deleteNotebook(id);
+    }
+
     @GetMapping
     public Collection<NotebookOutputMessage> findNotebooksByUser(@RequestParam("user_id") Integer id){
         return notebookService.findAllByUserId(id).stream()

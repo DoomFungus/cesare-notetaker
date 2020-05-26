@@ -1,18 +1,22 @@
 <ul id="notes-sidenav" class="sidenav sidenav-fixed collapsible">
   <li>
-    <div class="card-panel no-margin-top amber lighten-2"><h3>My Notebooks</h3></div>
+    <div class=" card-panel no-margin-top amber lighten-2"><h3>My Notebooks</h3></div>
   </li>
   <li *ngFor="let notebook of notebooks">
     <div class="collapsible-header">
       <i class="material-icons">book</i>
       <span>{{notebook.title}}</span>
+      <span class="fill-space"></span>
+      <i class="material-icons collapsible-icon" (click)="openDeleteNotebookModal($event, notebook.id)">delete</i>
     </div>
     <div class="collapsible-body background-color-transparent">
       <ul class="background-color-transparent">
         <li *ngFor="let note of notebook.notes" (click)="onNoteClick(note.id, note.title)"
-            class="double-padding-left width-parent sidenav-close waves-effect waves-light background-color-transparent-hover">
+            class="double-padding-left width-parent-flex sidenav-close waves-effect waves-light background-color-transparent-hover">
           <i class="material-icons small-margin-right collapsible-icon">note</i>
           <span>{{note.title}}</span>
+          <span class="fill-space"></span>
+          <i class="material-icons collapsible-icon" (click)="openDeleteNoteModal($event, note.id, notebook.id)">delete</i>
         </li>
         <li>
           <div data-target="new-note-modal" class="double-margin-left sidenav-close  modal-trigger
@@ -65,6 +69,28 @@
   <div class="modal-footer">
     <a class=" modal-action modal-close waves-effect waves-green btn-flat"
        (click)="onAddNoteFinish()">Submit</a>
+    <a class=" modal-action modal-close waves-effect waves-red btn-flat">Cancel</a>
+  </div>
+</div>
+
+<div id="delete-notebook-modal" class="modal">
+  <div class="modal-content">
+    <h4>Are you sure you want to delete this notebook?</h4>
+  </div>
+  <div class="modal-footer">
+    <a class=" modal-action modal-close waves-effect waves-green btn-flat"
+       (click)="onDeleteNotebookFinish()">Delete</a>
+    <a class=" modal-action modal-close waves-effect waves-red btn-flat">Cancel</a>
+  </div>
+</div>
+
+<div id="delete-note-modal" class="modal">
+  <div class="modal-content">
+    <h4>Are you sure you want to delete this note?</h4>
+  </div>
+  <div class="modal-footer">
+    <a class=" modal-action modal-close waves-effect waves-green btn-flat"
+       (click)="onDeleteNoteFinish()">Delete</a>
     <a class=" modal-action modal-close waves-effect waves-red btn-flat">Cancel</a>
   </div>
 </div>

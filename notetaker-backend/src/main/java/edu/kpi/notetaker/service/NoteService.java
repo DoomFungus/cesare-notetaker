@@ -11,6 +11,8 @@ public interface NoteService {
 
     Note createNote(Integer notebookId, Note note);
 
+    void deleteNote(Integer noteId);
+
     void updateNoteContent(Integer noteId, byte[] content);
 
     byte[] getNoteContent(Integer noteId);

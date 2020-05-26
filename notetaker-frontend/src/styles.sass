@@ -36,11 +36,18 @@ $navbar-height: 60px
 .ck.ck-content ul
   padding-left: 40px
 
-.width-parent
+.width-parent-flex
   width: 100%
+  display: flex
 
 .collapsible-icon
   line-height: inherit !important
+
+.fill-space
+  // This fills the remaining space, by using flexbox.
+  // Every toolbar row uses a flexbox row layout.
+  flex: 1 1 auto
+
 
 body
   --ck-z-modal: 0

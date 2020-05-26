@@ -38,6 +38,11 @@ public class NotebookServiceImpl implements NotebookService {
     }
 
     @Override
+    public void deleteNotebook(Integer notebookId) {
+        notebookRepository.deleteById(notebookId);
+    }
+
+    @Override
     public Collection<Notebook> findAllByUserId(Integer userId) {
         User author = userService.findById(userId);
         return notebookRepository.findAllByUser(author);

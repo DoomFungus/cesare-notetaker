@@ -28,4 +28,12 @@ export class HierarchyService {
     return this.httpClient.post(environment.backendUrlBase + NOTE_PATH,
       new_note, {params:params})
   }
+
+  public deleteNotebook(notebook_id:number):Observable<any>{
+    return this.httpClient.delete(environment.backendUrlBase + NOTEBOOK_PATH + '/' + notebook_id)
+  }
+
+  public deleteNote(note_id:number):Observable<any>{
+    return this.httpClient.delete(environment.backendUrlBase + NOTE_PATH + '/' + note_id)
+  }
 }
