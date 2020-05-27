@@ -1,14 +1,13 @@
 import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {Notebook} from "./notebook";
-import {HierarchyService} from "./hierarchy.service";
-import {element} from "protractor";
+import {NavigationService} from "./navigation.service";
 
 @Component({
-  selector: 'app-hierarchy',
-  templateUrl: './hierarchy.component.html',
-  styleUrls: ['./hierarchy.component.sass'],
+  selector: 'app-navigation',
+  templateUrl: './navigation.component.html',
+  styleUrls: ['./navigation.component.sass'],
 })
-export class HierarchyComponent implements OnInit {
+export class NavigationComponent implements OnInit {
 
   @Input()
   user_id: number
@@ -24,7 +23,7 @@ export class HierarchyComponent implements OnInit {
   deleted_notebook_id:number
   deleted_note_id:number
 
-  constructor(private hierarchyService:HierarchyService, @Inject('M') private M: any) {
+  constructor(private hierarchyService:NavigationService, @Inject('M') private M: any) {
 
   }
 
@@ -48,7 +47,7 @@ export class HierarchyComponent implements OnInit {
       const instances = self.M.Collapsible.init(elems, {accordion: false})
     });
     document.addEventListener('DOMContentLoaded', function() {
-      const elems = document.querySelectorAll('.modal');
+      const elems = document.querySelectorAll('.nav-modal');
       const instances = self.M.Modal.init(elems, {});
     });
     document.addEventListener('DOMContentLoaded', function() {

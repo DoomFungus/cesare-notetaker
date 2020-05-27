@@ -1,0 +1,23 @@
+<div id="login-modal" class="modal modal-narrow log-modal">
+  <div class="modal-content">
+    <div class="row">
+      <form class="col s12">
+        <div class="row modal-form-row">
+          <div class="input-field col s10">
+            <input id="username" type="text" class="validate" [(ngModel)]="model.username" name="username">
+            <label for="username">Username</label>
+          </div>
+        </div>
+        <div class="row modal-form-row">
+          <div class="input-field col s10">
+            <input id="password" type="password" class="validate" [(ngModel)]="model.password" name="password">
+            <label for="password">Password</label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a class=" modal-action modal-close waves-effect waves-green btn-flat" (click)="onLogin()">Log in</a>
+  </div>
+</div>

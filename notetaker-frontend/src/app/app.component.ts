@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-  title = 'notetaker-frontend';
+  title = 'Cesare Notetaker';
   active_note_id: number
   active_note_title: string = "Choose note"
 

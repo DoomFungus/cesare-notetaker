@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {environment} from "../../../environments/environment";
+import {environment} from "../../environments/environment";
 
 const NOTEBOOK_PATH:String = "/notebook"
 const NOTE_PATH:String = "/note"
 
 @Injectable()
-export class HierarchyService {
+export class NavigationService {
   constructor(private httpClient: HttpClient) { }
 
   public getNotebooksByUser(user_id:number):Observable<any>{
