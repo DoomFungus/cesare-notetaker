@@ -33,6 +33,10 @@ export class HierarchyComponent implements OnInit {
     this.hierarchyService.getNotebooksByUser(this.user_id)
       .subscribe((notebooks) => {
         self.notebooks = notebooks
+        notebooks.sort((a, b) => {return a.id - b.id})
+        for(let notebook of notebooks){
+          notebook.notes.sort((a, b) => {return a.id - b.id})
+        }
         }
       )
     document.addEventListener('DOMContentLoaded', function() {

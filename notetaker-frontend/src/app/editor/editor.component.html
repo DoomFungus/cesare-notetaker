@@ -1,4 +1,9 @@
 <div class="editor" role="main">
   <ckeditor [(ngModel)]="model.editorData" [editor]="Editor" [config]="ckConfig" data="<p>Hello, world!</p>"></ckeditor>
 </div>
+<div class="fixed-action-btn">
+  <a class="btn-floating btn-large red" (click)="onSave()">
+    <i class="large material-icons">save</i>
+  </a>
+</div>
 

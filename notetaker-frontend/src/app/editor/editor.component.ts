@@ -13,7 +13,7 @@ export class EditorComponent implements OnInit, OnChanges{
   note_id:number
 
   public model = {
-    editorData: '<p>Hello, world!</p>'
+    editorData: ""
   };
 
   constructor(private editorService:EditorService) { }
@@ -33,8 +33,6 @@ export class EditorComponent implements OnInit, OnChanges{
     }
   }
 
-
-
   public Editor = ClassicEditor;
   ckConfig = {
     image: {
@@ -42,4 +40,9 @@ export class EditorComponent implements OnInit, OnChanges{
       toolbar: [ 'imageStyle:full', 'imageStyle:alignRight', 'imageStyle:alignLeft' ]
     }
   };
+
+  onSave(){
+    this.editorService.putNoteContent(this.note_id.toString(), this.model.editorData)
+      .subscribe();
+  }
 }

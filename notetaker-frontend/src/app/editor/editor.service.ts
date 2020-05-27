@@ -17,4 +17,12 @@ export class EditorService {
     let requestUrl: string = environment.backendUrlBase + NOTE_PATH + '/' + note_id + CONTENT_PATH;
     return this.httpClient.get( requestUrl, {responseType:"blob"})
   }
+
+  public putNoteContent(note_id: string, content: string):Observable<any>{
+    const blob = new Blob([content])
+    const formData = new FormData();
+    formData.append("content", blob)
+    let requestUrl: string = environment.backendUrlBase + NOTE_PATH + '/' + note_id + CONTENT_PATH;
+    return this.httpClient.put(requestUrl, formData)
+  }
 }
