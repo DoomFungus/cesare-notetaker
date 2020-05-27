@@ -1,7 +1,6 @@
-<!-- Toolbar -->
-<app-hierarchy [user_id]="1" (onNoteClickEvent)="onNoteChosen($event)"></app-hierarchy>
 <header>
   <app-header [header_text]="active_note_title"></app-header>
+  <app-hierarchy [user_id]="1" (onNoteClickEvent)="onNoteChosen($event)"></app-hierarchy>
 </header>
 <main>
   <app-editor [note_id]="active_note_id"></app-editor>
