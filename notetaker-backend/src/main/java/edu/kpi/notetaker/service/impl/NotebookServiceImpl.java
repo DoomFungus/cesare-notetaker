@@ -30,8 +30,8 @@ public class NotebookServiceImpl implements NotebookService {
     }
 
     @Override
-    public Notebook createNotebook(Integer userId, Notebook notebook) {
-        User author = userService.findById(userId);
+    public Notebook createNotebook(String username, Notebook notebook) {
+        User author = userService.findByUsername(username);
         notebook.setUser(author);
         notebook.setCreationTimestamp(LocalDateTime.now());
         return notebookRepository.save(notebook);
@@ -43,8 +43,8 @@ public class NotebookServiceImpl implements NotebookService {
     }
 
     @Override
-    public Collection<Notebook> findAllByUserId(Integer userId) {
-        User author = userService.findById(userId);
+    public Collection<Notebook> findAllByUsername(String username) {
+        User author = userService.findByUsername(username);
         return notebookRepository.findAllByUser(author);
     }
 }

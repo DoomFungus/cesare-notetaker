@@ -6,6 +6,8 @@ import edu.kpi.notetaker.model.User;
 import edu.kpi.notetaker.repository.UserRepository;
 import edu.kpi.notetaker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -43,9 +45,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUserToken(Integer userId, String token) {
-        User user = findById(userId);
+    public User updateUserToken(String userName, String token) {
+        User user = findByUsername(userName);
         user.setRefreshToken(token);
         return userRepository.save(user);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        try {
+            return findByUsername(s);
+        } catch (EntityNotFoundException ex){
+            throw new UsernameNotFoundException(ex.getMessage(), ex);
+        }
     }
 }

@@ -2,6 +2,7 @@ package edu.kpi.notetaker.exceptionhandling;
 
 import edu.kpi.notetaker.exceptionhandling.exceptions.EntityAlreadyExistsException;
 import edu.kpi.notetaker.exceptionhandling.exceptions.EntityNotFoundException;
+import edu.kpi.notetaker.exceptionhandling.exceptions.TokenExpiredException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,5 +31,13 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
                 new ErrorMessage(LocalDateTime.now(), HttpStatus.NOT_FOUND, ex.getMessage(),
                         ((ServletWebRequest)request).getRequest().getRequestURI()),
                 new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(value = {TokenExpiredException.class})
+    protected ResponseEntity<Object> handleUnauthorised(RuntimeException ex, WebRequest request) {
+        return handleExceptionInternal(ex,
+                new ErrorMessage(LocalDateTime.now(), HttpStatus.UNAUTHORIZED, ex.getMessage(),
+                        ((ServletWebRequest)request).getRequest().getRequestURI()),
+                new HttpHeaders(), HttpStatus.UNAUTHORIZED, request);
     }
 }

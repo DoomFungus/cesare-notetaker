@@ -21,11 +21,11 @@ public class NotebookController {
     }
 
     @PostMapping
-    public NotebookOutputMessage saveNotebook(@RequestParam("user_id") Integer userId,
+    public NotebookOutputMessage saveNotebook(@RequestParam("username") String username,
                                        @RequestBody NotebookInputMessage message){
         return NotebookOutputMessage
                 .fromNotebook(notebookService
-                        .createNotebook(userId, message.toNotebook())
+                        .createNotebook(username, message.toNotebook())
                 );
     }
 
@@ -43,8 +43,8 @@ public class NotebookController {
     }
 
     @GetMapping
-    public Collection<NotebookOutputMessage> findNotebooksByUser(@RequestParam("user_id") Integer id){
-        return notebookService.findAllByUserId(id).stream()
+    public Collection<NotebookOutputMessage> findNotebooksByUser(@RequestParam("username") String username){
+        return notebookService.findAllByUsername(username).stream()
                 .map(NotebookOutputMessage::fromNotebook)
                 .collect(Collectors.toCollection(ArrayList::new));
     }

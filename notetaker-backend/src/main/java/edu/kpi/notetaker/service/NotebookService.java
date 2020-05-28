@@ -7,9 +7,9 @@ import java.util.Collection;
 public interface NotebookService {
     Notebook findById(Integer notebookId);
 
-    Notebook createNotebook(Integer userId, Notebook notebook);
+    Notebook createNotebook(String username, Notebook notebook);
 
     void deleteNotebook(Integer notebookId);
 
-    Collection<Notebook> findAllByUserId(Integer userId);
+    Collection<Notebook> findAllByUsername(String username);
 }

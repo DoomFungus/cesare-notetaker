@@ -1,5 +1,6 @@
 package edu.kpi.notetaker.exceptionhandling;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -9,7 +10,6 @@ import java.time.LocalDateTime;
 
 @Data
 public class ErrorMessage {
-    @JsonProperty(index = 0)
     private final LocalDateTime timestamp;
     @JsonIgnore
     private final HttpStatus httpStatus;
@@ -26,5 +26,10 @@ public class ErrorMessage {
     @JsonProperty(index = 2)
     public String getError(){
         return httpStatus.getReasonPhrase();
+    }
+
+    @JsonProperty(index = 0)
+    public String getTimestamp() {
+        return timestamp.toString();
     }
 }

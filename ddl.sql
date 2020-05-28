@@ -77,3 +77,6 @@ ALTER TABLE users_roles ADD FOREIGN KEY (role_id) REFERENCES roles (id);
 ALTER TABLE attachments ADD FOREIGN KEY (note_id) REFERENCES notes (id);
 
 CREATE INDEX user_name ON users (username);
+
+INSERT INTO roles (name)
+VALUES ('USER');
