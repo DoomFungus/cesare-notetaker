@@ -24,7 +24,7 @@ public class AttachmentController {
 
     @PreAuthorize("hasAuthority('ROLE_USER')")
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public AttachmentOutputMessage saveNote(@RequestParam("note_id") Integer noteId,
+    public AttachmentOutputMessage saveAttachment(@RequestParam("note_id") Integer noteId,
                                              @RequestBody MultipartFile content) throws IOException {
         return AttachmentOutputMessage
                 .fromAttachment(attachmentService
@@ -34,11 +34,17 @@ public class AttachmentController {
 
     @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping("/{id}")
-    public AttachmentOutputMessage findNote(@PathVariable("id") Integer id){
+    public AttachmentOutputMessage findAttachment(@PathVariable("id") Integer id){
         return AttachmentOutputMessage
                 .fromAttachment(attachmentService
                         .findById(id)
                 );
+    }
+
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @DeleteMapping("/{id}")
+    public void deleteAttachment(@PathVariable("id") Integer id){
+        attachmentService.deleteAttachment(id);
     }
 
     @PreAuthorize("hasAuthority('ROLE_USER')")

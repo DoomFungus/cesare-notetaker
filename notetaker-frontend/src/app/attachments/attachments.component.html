@@ -1,0 +1,43 @@
+<div class="fixed-action-btn">
+  <a data-target="attachments-modal" class="btn-floating btn-large red modal-trigger">
+    <i class="large material-icons">attach_file</i>
+  </a>
+</div>
+<div id="attachments-modal" class="modal attachments-modal">
+  <div class="modal-content">
+    <h4>Attachments</h4>
+    <ul class="collection">
+      <li *ngFor="let attachment of attachments" class="collection-item">
+        <div>
+          <span>{{attachment.title}}</span>
+          <i class="material-icons right" (click)="handleAttachmentDownload(attachment.id, attachment.title)">file_download</i>
+          <i class="material-icons right" (click)="openDeleteAttachmentModal(attachment.id)">delete</i>
+        </div>
+      </li>
+      <li class="collection-item">
+        <form action="#">
+          <div class="file-field input-field">
+            <div class="btn">
+              <span>Upload new attachment</span>
+              <input data-type="file-upload" type="file" (change)="handleAttachmentUpload($event)">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text">
+            </div>
+          </div>
+        </form>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div id="delete-attachment-modal" class="modal attachments-modal">
+  <div class="modal-content">
+    <h4>Delete attachment?</h4>
+    <div class="modal-footer">
+      <a class=" modal-action modal-close waves-effect waves-green btn-flat"
+         (click)="onDeleteAttachmentFinish()">Delete</a>
+      <a class=" modal-action modal-close waves-effect waves-red btn-flat">Cancel</a>
+    </div>
+  </div>
+</div>

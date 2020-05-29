@@ -8,7 +8,7 @@ import java.io.IOException;
 public class AttachmentInput {
     public static Attachment toAttachment(MultipartFile multipartFile) throws IOException {
         Attachment attachment = new Attachment();
-        attachment.setTitle(multipartFile.getName());
+        attachment.setTitle(multipartFile.getOriginalFilename());
         attachment.setContent(multipartFile.getBytes());
         return attachment;
     }

@@ -37,6 +37,11 @@ public class AttachmentServiceImpl implements AttachmentService {
     }
 
     @Override
+    public void deleteAttachment(Integer attachmentId) {
+        attachmentRepository.deleteById(attachmentId);
+    }
+
+    @Override
     public void updateAttachmentContent(Integer attachmentId, byte[] content) {
         Attachment attachment = findById(attachmentId);
         attachment.setContent(content);

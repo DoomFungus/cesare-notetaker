@@ -13,6 +13,11 @@ export class EditorService {
 
   constructor(private httpClient: HttpClient) { }
 
+  public getNote(note_id:string):Observable<any>{
+    let requestUrl: string = environment.backendUrlBase + NOTE_PATH + '/' + note_id;
+    return this.httpClient.get(requestUrl)
+  }
+
   public getNoteContent(note_id:string):Observable<any>{
     let requestUrl: string = environment.backendUrlBase + NOTE_PATH + '/' + note_id + CONTENT_PATH;
     return this.httpClient.get( requestUrl, {responseType:"blob"})

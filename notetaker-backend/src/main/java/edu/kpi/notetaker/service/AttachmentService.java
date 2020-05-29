@@ -7,6 +7,8 @@ public interface AttachmentService {
 
     Attachment createAttachment(Integer noteId, Attachment attachment);
 
+    void deleteAttachment(Integer attachmentId);
+
     void updateAttachmentContent(Integer attachmentId, byte[] content);
 
     byte[] getAttachmentContent(Integer attachmentId);

@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Cesare Notetaker';
-  active_note_id: number
+  active_note_id: number = 0
   active_note_title: string = "Choose note"
   username: string
 

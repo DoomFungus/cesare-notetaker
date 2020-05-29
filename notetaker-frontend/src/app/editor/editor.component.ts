@@ -1,6 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import * as ClassicEditor from 'cesare-notetaker-editor-build';
 import {EditorService} from "./editor.service";
+import {Attachment} from "../shared/attachment";
 
 @Component({
   selector: 'app-editor',
@@ -11,6 +12,8 @@ export class EditorComponent implements OnInit, OnChanges{
 
   @Input()
   note_id:number
+  attachments: Attachment[]
+  tags
 
   public model = {
     editorData: ""
@@ -23,7 +26,7 @@ export class EditorComponent implements OnInit, OnChanges{
 
   ngOnChanges(changes: SimpleChanges): void {
     const self = this;
-    if (this.note_id !== undefined){
+    if (this.note_id !== 0){
       document.getElementById("content_loader").style.display = 'block'
       this.editorService
         .getNoteContent(this.note_id.toString())
@@ -31,6 +34,11 @@ export class EditorComponent implements OnInit, OnChanges{
           value.text()
             .then(text => self.model.editorData = text)
           document.getElementById("content_loader").style.display = 'none'
+        })
+      this.editorService
+        .getNote(this.note_id.toString())
+        .subscribe(value => {
+          self.attachments = value.attachments
         })
     }
   }

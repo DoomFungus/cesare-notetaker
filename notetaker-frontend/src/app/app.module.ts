@@ -14,6 +14,7 @@ import * as M from 'materialize-css/dist/js/materialize';
 import { LoginComponent } from './login/login.component';
 import {ApplyTokenInterceptor} from "./shared/apply-token.interceptor";
 import {RefreshTokenInterceptor} from "./shared/refresh-token.interceptor";
+import { AttachmentsComponent } from './attachments/attachments.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {RefreshTokenInterceptor} from "./shared/refresh-token.interceptor";
     EditorComponent,
     HeaderComponent,
     NavigationComponent,
-    LoginComponent
+    LoginComponent,
+    AttachmentsComponent
   ],
   imports: [
     BrowserModule,
