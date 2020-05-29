@@ -2,7 +2,6 @@ package edu.kpi.notetaker.controller;
 
 import edu.kpi.notetaker.message.AuthInputMessage;
 import edu.kpi.notetaker.message.AuthOutputMessage;
-import edu.kpi.notetaker.message.UserInputMessage;
 import edu.kpi.notetaker.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,7 +29,6 @@ public class AuthController {
     }
 
     @PostMapping("/refresh")
-    @PreAuthorize("hasAuthority('ROLE_USER')")
     public String refresh(@RequestBody String refreshToken){
         return authService.refresh(refreshToken);
     }

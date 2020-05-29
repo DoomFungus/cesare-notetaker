@@ -10,14 +10,14 @@ const NOTE_PATH:String = "/note"
 export class NavigationService {
   constructor(private httpClient: HttpClient) { }
 
-  public getNotebooksByUser(user_id:number):Observable<any>{
-    const params = new HttpParams().set("user_id", user_id.toString());
+  public getNotebooksByUser(username:string):Observable<any>{
+    const params = new HttpParams().set("username", username);
     return this.httpClient.get(environment.backendUrlBase + NOTEBOOK_PATH, {params:params})
   }
 
-  public postNotebook(user_id: number, notebook_title:String):Observable<any>{
+  public postNotebook(username: string, notebook_title:String):Observable<any>{
     const new_notebook = {title:notebook_title}
-    const params = new HttpParams().set("user_id", user_id.toString());
+    const params = new HttpParams().set("username", username.toString());
     return this.httpClient.post(environment.backendUrlBase + NOTEBOOK_PATH,
       new_notebook, {params:params})
   }

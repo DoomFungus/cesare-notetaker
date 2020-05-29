@@ -6,6 +6,7 @@ import edu.kpi.notetaker.exceptionhandling.exceptions.TokenExpiredException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -33,7 +34,7 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
                 new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
-    @ExceptionHandler(value = {TokenExpiredException.class})
+    @ExceptionHandler(value = {TokenExpiredException.class, BadCredentialsException.class})
     protected ResponseEntity<Object> handleUnauthorised(RuntimeException ex, WebRequest request) {
         return handleExceptionInternal(ex,
                 new ErrorMessage(LocalDateTime.now(), HttpStatus.UNAUTHORIZED, ex.getMessage(),

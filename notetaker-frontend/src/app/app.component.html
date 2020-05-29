@@ -1,7 +1,7 @@
 <header>
   <app-header [header_text]="active_note_title"></app-header>
-  <app-navigation [user_id]="1" (onNoteClickEvent)="onNoteChosen($event)"></app-navigation>
-  <app-login></app-login>
+  <app-navigation [username]="username" (onNoteClickEvent)="onNoteChosen($event)"></app-navigation>
+  <app-login (onLoggedInEvent)="onLoggedIn($event)"></app-login>
 </header>
 <main>
   <app-editor [note_id]="active_note_id"></app-editor>

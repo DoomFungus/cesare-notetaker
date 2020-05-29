@@ -6,6 +6,7 @@ import edu.kpi.notetaker.service.AttachmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +22,7 @@ public class AttachmentController {
         this.attachmentService = attachmentService;
     }
 
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public AttachmentOutputMessage saveNote(@RequestParam("note_id") Integer noteId,
                                              @RequestBody MultipartFile content) throws IOException {
@@ -30,6 +32,7 @@ public class AttachmentController {
                 );
     }
 
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping("/{id}")
     public AttachmentOutputMessage findNote(@PathVariable("id") Integer id){
         return AttachmentOutputMessage
@@ -38,12 +41,14 @@ public class AttachmentController {
                 );
     }
 
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping(value = "/{id}/content", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     @ResponseBody
     public ByteArrayResource getAttachmentContent(@PathVariable("id") Integer id){
         return new ByteArrayResource(attachmentService.getAttachmentContent(id));
     }
 
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @PutMapping(value = "/{id}/content", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void updateAttachmentContent(@PathVariable("id") Integer attachmentId,
                                   @RequestBody MultipartFile content) throws IOException {

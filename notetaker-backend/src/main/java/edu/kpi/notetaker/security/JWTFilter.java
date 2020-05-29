@@ -44,7 +44,7 @@ public class JWTFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(auth);
             } catch (Exception ex){
                 ErrorMessage message = new ErrorMessage(LocalDateTime.now(), HttpStatus.UNAUTHORIZED,
-                        "Access token expired", request.getServletPath());
+                        "Access token expired", request.getRequestURI());
 
                 response.setStatus(message.getStatus());
                 response.setContentType("application/json");
@@ -57,6 +57,12 @@ public class JWTFilter extends OncePerRequestFilter {
             }
         }
         filterChain.doFilter(request, response);
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getRequestURI();
+        return path.equals("/signin") || path.equals("/signup") || path.equals("/refresh");
     }
 
     private String resolveToken(HttpServletRequest req) {

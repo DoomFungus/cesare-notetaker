@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
-import {Notebook} from "./notebook";
+import {Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Notebook} from "../shared/notebook";
 import {NavigationService} from "./navigation.service";
 
 @Component({
@@ -7,10 +7,10 @@ import {NavigationService} from "./navigation.service";
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.sass'],
 })
-export class NavigationComponent implements OnInit {
+export class NavigationComponent implements OnInit, OnChanges {
 
   @Input()
-  user_id: number
+  username: string
 
   @Output()
   onNoteClickEvent = new EventEmitter<[number, string]>()
@@ -23,21 +23,12 @@ export class NavigationComponent implements OnInit {
   deleted_notebook_id:number
   deleted_note_id:number
 
-  constructor(private hierarchyService:NavigationService, @Inject('M') private M: any) {
+  constructor(private navigationService:NavigationService, @Inject('M') private M: any) {
 
   }
 
   ngOnInit(): void {
     const self = this;
-    this.hierarchyService.getNotebooksByUser(this.user_id)
-      .subscribe((notebooks) => {
-        self.notebooks = notebooks
-        notebooks.sort((a, b) => {return a.id - b.id})
-        for(let notebook of notebooks){
-          notebook.notes.sort((a, b) => {return a.id - b.id})
-        }
-        }
-      )
     document.addEventListener('DOMContentLoaded', function() {
       const elems = document.querySelectorAll('.sidenav');
       const instances = self.M.Sidenav.init(elems, {});
@@ -56,6 +47,21 @@ export class NavigationComponent implements OnInit {
     });
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if(this.username===undefined)
+      return;
+    const self = this;
+    this.navigationService.getNotebooksByUser(this.username)
+      .subscribe((notebooks) => {
+          self.notebooks = notebooks
+          notebooks.sort((a, b) => {return a.id - b.id})
+          for(let notebook of notebooks){
+            notebook.notes.sort((a, b) => {return a.id - b.id})
+          }
+        }
+      )
+  }
+
   onNoteClick(note_id:number, note_title){
     this.onNoteClickEvent.emit([note_id,note_title])
   }
@@ -68,7 +74,7 @@ export class NavigationComponent implements OnInit {
     const self = this;
     console.log(self.active_notebook_id)
     console.log(self.notebooks)
-    this.hierarchyService
+    this.navigationService
       .postNote(this.active_notebook_id, this.new_note_title)
       .subscribe((note => {
         self.notebooks.find((element) => element.id===self.active_notebook_id)
@@ -78,8 +84,8 @@ export class NavigationComponent implements OnInit {
 
   onAddNotebookFinish(){
     const self = this;
-    this.hierarchyService
-      .postNotebook(this.user_id, this.new_notebook_title)
+    this.navigationService
+      .postNotebook(this.username, this.new_notebook_title)
       .subscribe((notebook => {
         self.notebooks.push({id: notebook.id, title: notebook.title, notes: []})
       }))
@@ -100,7 +106,7 @@ export class NavigationComponent implements OnInit {
 
   onDeleteNotebookFinish(){
     const self = this;
-    this.hierarchyService
+    this.navigationService
       .deleteNotebook(this.deleted_notebook_id)
       .subscribe(value => {
         self.notebooks = self.notebooks
@@ -112,7 +118,7 @@ export class NavigationComponent implements OnInit {
 
   onDeleteNoteFinish(){
     const self = this;
-    this.hierarchyService
+    this.navigationService
       .deleteNote(this.deleted_note_id)
       .subscribe(value => {
         const notebook = self.notebooks.find((element) => element.id===self.active_notebook_id)
