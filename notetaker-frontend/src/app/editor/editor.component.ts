@@ -24,11 +24,13 @@ export class EditorComponent implements OnInit, OnChanges{
   ngOnChanges(changes: SimpleChanges): void {
     const self = this;
     if (this.note_id !== undefined){
+      document.getElementById("content_loader").style.display = 'block'
       this.editorService
         .getNoteContent(this.note_id.toString())
         .subscribe(value => {
           value.text()
             .then(text => self.model.editorData = text)
+          document.getElementById("content_loader").style.display = 'none'
         })
     }
   }

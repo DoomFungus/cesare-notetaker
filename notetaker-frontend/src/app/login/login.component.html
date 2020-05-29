@@ -1,4 +1,4 @@
-<div id="login-modal" class="modal modal-narrow log-modal">
+<div id="login-modal" class="modal log-modal">
   <div class="modal-content">
     <div class="row">
       <h4>{{model.headingMessage}}</h4>
@@ -21,11 +21,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <div class="row">
-      <a class=" modal-action waves-effect waves-green btn-flat" (click)="onLogin()">Log in</a>
-    </div>
-    <div class="row">
-      <a class=" modal-action waves-effect waves-green btn-flat" (click)="onSignup()">Sign up</a>
-    </div>
+      <a class=" modal-action waves-effect waves-green btn-flat left" (click)="onLogin()">Log in</a>
+      <a class=" modal-action waves-effect waves-green btn-flat right" (click)="onSignup()">Sign up</a>
   </div>
 </div>
