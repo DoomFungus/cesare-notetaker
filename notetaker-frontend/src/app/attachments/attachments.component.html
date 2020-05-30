@@ -10,8 +10,8 @@
       <li *ngFor="let attachment of attachments" class="collection-item">
         <div>
           <span>{{attachment.title}}</span>
-          <i class="material-icons right" (click)="handleAttachmentDownload(attachment.id, attachment.title)">file_download</i>
-          <i class="material-icons right" (click)="openDeleteAttachmentModal(attachment.id)">delete</i>
+          <i class="material-icons right cursor-pointer" (click)="handleAttachmentDownload(attachment.id, attachment.title)">file_download</i>
+          <i class="material-icons right cursor-pointer" (click)="openDeleteAttachmentModal(attachment.id)">delete</i>
         </div>
       </li>
       <li class="collection-item">

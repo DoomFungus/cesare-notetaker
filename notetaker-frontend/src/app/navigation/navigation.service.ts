@@ -2,17 +2,28 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
+import {Notebook} from "../shared/notebook";
 
 const NOTEBOOK_PATH:String = "/notebook"
 const NOTE_PATH:String = "/note"
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class NavigationService {
   constructor(private httpClient: HttpClient) { }
 
-  public getNotebooksByUser(username:string):Observable<any>{
+  public getNotebooksByUser(username:string):Observable<Notebook[]>{
     const params = new HttpParams().set("username", username);
-    return this.httpClient.get(environment.backendUrlBase + NOTEBOOK_PATH, {params:params})
+    return this.httpClient.get<Notebook[]>(environment.backendUrlBase + NOTEBOOK_PATH, {params:params})
+      // .pipe(
+      //   map(data => {
+      //     for(let notebook of data){
+      //       notebook.title = CryptoJS.AES.decrypt(notebook.title, encryption_key);
+      //     }
+      //     return data
+      //   })
+      // )
+
   }
 
   public postNotebook(username: string, notebook_title:String):Observable<any>{

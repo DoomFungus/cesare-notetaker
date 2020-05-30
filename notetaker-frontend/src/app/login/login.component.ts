@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
-import {NavigationService} from "../navigation/navigation.service";
 import {AuthService} from "../shared/auth.service";
+import {EncryptionService} from "../shared/encryption.service";
 
 @Component({
   selector: 'app-login',
@@ -10,7 +10,7 @@ import {AuthService} from "../shared/auth.service";
 export class LoginComponent implements OnInit {
 
   loginLoadAnimation: HTMLElement;
-  constructor(private loginService:AuthService, @Inject('M') private M: any) { }
+  constructor(private loginService:AuthService, private encryptionService: EncryptionService, @Inject('M') private M: any) { }
 
   @Output()
   onLoggedInEvent = new EventEmitter<string>()
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
     const self = this;
     this.loginLoadAnimation.style.display = 'block'
     this.loginService.signIn(this.model.username, this.model.password).subscribe(
-      data => self.onSuccessfulLogin(self.model.username, data.accessToken, data.refreshToken),
+      data => self.onSuccessfulLogin(self.model.username, self.model.password, data.accessToken, data.refreshToken),
       error => self.onUnsuccessfulLogin(error)
     )
   }
@@ -44,18 +44,21 @@ export class LoginComponent implements OnInit {
     const self = this;
     this.loginLoadAnimation.style.display = 'block'
     this.loginService.signUp(this.model.username, this.model.password).subscribe(
-      data => self.onSuccessfulLogin(self.model.username, data.accessToken, data.refreshToken),
+      data => self.onSuccessfulLogin(self.model.username, self.model.password, data.accessToken, data.refreshToken),
       error => self.onUnsuccessfulSignup(error)
     )
   }
 
-  onSuccessfulLogin(username:string, accessToken:string, refreshToken:string){
-    this.onLoggedInEvent.emit(this.model.username)
+  onSuccessfulLogin(username:string, password:string, accessToken:string, refreshToken:string){
+    this.onLoggedInEvent.emit(username)
     this.loginLoadAnimation.style.display = 'none'
+    this.encryptionService.setKey(username, password)
     localStorage.setItem("access_token", accessToken)
     localStorage.setItem("refresh_token", refreshToken)
     this.M.Modal.getInstance(document.getElementById("login-modal")).close();
     this.model.headingMessage = "Please enter your credentials"
+    this.model.username=""
+    this.model.password=""
   }
 
   onUnsuccessfulLogin(error){
