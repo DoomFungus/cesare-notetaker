@@ -52,7 +52,7 @@ export class NavigationComponent implements OnInit, OnChanges {
       return;
     const self = this;
     this.navigationService.getNotebooksByUser(this.username)
-      .subscribe((notebooks) => {
+      .then((notebooks) => {
           self.notebooks = notebooks
           notebooks.sort((a, b) => {return a.id - b.id})
           for(let notebook of notebooks){
@@ -72,13 +72,11 @@ export class NavigationComponent implements OnInit, OnChanges {
 
   onAddNoteFinish(){
     const self = this;
-    console.log(self.active_notebook_id)
-    console.log(self.notebooks)
     this.navigationService
       .postNote(this.active_notebook_id, this.new_note_title)
-      .subscribe((note => {
+      .then((note => {
         self.notebooks.find((element) => element.id===self.active_notebook_id)
-          .notes.push({id: note.id, title: note.title, content: ""})
+          .notes.push({id: note.id, title: note.title, content: "", attachments:[]})
       }))
   }
 
@@ -86,7 +84,7 @@ export class NavigationComponent implements OnInit, OnChanges {
     const self = this;
     this.navigationService
       .postNotebook(this.username, this.new_notebook_title)
-      .subscribe((notebook => {
+      .then((notebook => {
         self.notebooks.push({id: notebook.id, title: notebook.title, notes: []})
       }))
   }

@@ -4,6 +4,10 @@ spring:
     driver-class-name: org.postgresql.Driver
     password: ${DATASOURCE_PASSWORD}
     username: ${DATASOURCE_USERNAME}
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 server:
   port: 80
 

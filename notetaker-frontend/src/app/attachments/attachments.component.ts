@@ -23,7 +23,7 @@ export class AttachmentsComponent implements OnInit, OnChanges{
     const self = this
     document.addEventListener('DOMContentLoaded', function() {
       const elems = document.querySelectorAll('.attachments-modal');
-      const instances = self.M.Modal.init(elems, {});
+      self.M.Modal.init(elems, {});
     });
   }
 
@@ -35,14 +35,14 @@ export class AttachmentsComponent implements OnInit, OnChanges{
     console.log(this.parent_note_id)
     const self = this
     this.attachmentsService.postAttachment(this.parent_note_id, file)
-       .subscribe(data => {
+       .then(data => {
          self.attachments.push(data)
        });
   }
 
   handleAttachmentDownload(attachment_id:number, attachment_name: string){
     this.attachmentsService.getAttachmentContent(attachment_id.toString())
-      .subscribe(data => saveAs(data, attachment_name)
+      .then(data => saveAs(data, attachment_name)
       )
   }
 

@@ -3,41 +3,58 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {Notebook} from "../shared/notebook";
+import { map } from 'rxjs/operators';
+import {EncryptionService} from "../shared/encryption.service";
+import {Note} from "../shared/note";
 
 const NOTEBOOK_PATH:String = "/notebook"
 const NOTE_PATH:String = "/note"
-import { map } from 'rxjs/operators';
+
 
 @Injectable()
 export class NavigationService {
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private encryptionService: EncryptionService) { }
 
-  public getNotebooksByUser(username:string):Observable<Notebook[]>{
+  public async getNotebooksByUser(username:string):Promise<Notebook[]>{
     const params = new HttpParams().set("username", username);
     return this.httpClient.get<Notebook[]>(environment.backendUrlBase + NOTEBOOK_PATH, {params:params})
-      // .pipe(
-      //   map(data => {
-      //     for(let notebook of data){
-      //       notebook.title = CryptoJS.AES.decrypt(notebook.title, encryption_key);
-      //     }
-      //     return data
-      //   })
-      // )
+      .toPromise()
+      .then(async data => {
+        for (let notebook of data) {
+          notebook.title = await this.encryptionService.decrypt(notebook.title)
+          for(let note of notebook.notes){
+            note.title = await this.encryptionService.decrypt(note.title)
+          }
+        }
+        return data
+      })
 
   }
 
-  public postNotebook(username: string, notebook_title:String):Observable<any>{
-    const new_notebook = {title:notebook_title}
+  public async postNotebook(username: string, notebook_title:string):Promise<Notebook> {
+    const new_notebook = {title: await this.encryptionService.encrypt(notebook_title)}
     const params = new HttpParams().set("username", username.toString());
-    return this.httpClient.post(environment.backendUrlBase + NOTEBOOK_PATH,
-      new_notebook, {params:params})
+    return this.httpClient.post<Notebook>(environment.backendUrlBase + NOTEBOOK_PATH,
+      new_notebook, {params: params})
+      .toPromise()
+      .then(async data => {
+          data.title = await this.encryptionService.decrypt(data.title)
+          return data
+        }
+      )
   }
 
-  public postNote(notebook_id:number, note_title:string):Observable<any>{
-    const new_note = {title:note_title}
+  public async postNote(notebook_id:number, note_title:string):Promise<Note>{
+    const new_note = {title: await this.encryptionService.encrypt(note_title)}
     const params = new HttpParams().set("notebook_id", notebook_id.toString());
-    return this.httpClient.post(environment.backendUrlBase + NOTE_PATH,
+    return this.httpClient.post<Note>(environment.backendUrlBase + NOTE_PATH,
       new_note, {params:params})
+      .toPromise()
+      .then(async data => {
+          data.title = await this.encryptionService.decrypt(data.title)
+          return data
+        }
+      )
   }
 
   public deleteNotebook(notebook_id:number):Observable<any>{

@@ -30,14 +30,13 @@ export class EditorComponent implements OnInit, OnChanges{
       document.getElementById("content_loader").style.display = 'block'
       this.editorService
         .getNoteContent(this.note_id.toString())
-        .subscribe(value => {
-          value.text()
-            .then(text => self.model.editorData = text)
+        .then(value => {
+          self.model.editorData = value
           document.getElementById("content_loader").style.display = 'none'
         })
       this.editorService
         .getNote(this.note_id.toString())
-        .subscribe(value => {
+        .then(value => {
           self.attachments = value.attachments
         })
     }
@@ -52,7 +51,8 @@ export class EditorComponent implements OnInit, OnChanges{
   };
 
   onSave(){
+    document.getElementById("content_loader").style.display = 'block'
     this.editorService.putNoteContent(this.note_id.toString(), this.model.editorData)
-      .subscribe();
+      .then(() => document.getElementById("content_loader").style.display = 'none');
   }
 }

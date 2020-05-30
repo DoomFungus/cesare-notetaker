@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
+import {EncryptionService} from "../shared/encryption.service";
+import {Attachment} from "../shared/attachment";
 
 const ATTACHMENT_PATH:String = "/attachment"
 const CONTENT_PATH:String = "/content"
@@ -11,18 +13,35 @@ const CONTENT_PATH:String = "/content"
 })
 export class AttachmentsService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private encryptionService: EncryptionService) { }
 
-  public getAttachmentContent(note_id:string):Observable<any>{
-    let requestUrl: string = environment.backendUrlBase + ATTACHMENT_PATH + '/' + note_id + CONTENT_PATH;
+  public async getAttachmentContent(attachment_id:string):Promise<Blob>{
+    let requestUrl: string = environment.backendUrlBase + ATTACHMENT_PATH + '/' + attachment_id + CONTENT_PATH;
     return this.httpClient.get( requestUrl, {responseType:"blob"})
+      .toPromise()
+      .then(async data => data.text())
+      .then(async data => {
+        if(data.length > 0)
+          return this.encryptionService.decrypt(data)
+        else return data
+      })
+      .then(data => new Blob([data]))
   }
 
-  public postAttachment(note_id:number, attachment:File):Observable<any>{
+  public async postAttachment(note_id:number, attachment:File):Promise<Attachment>{
     const formData = new FormData();
-    formData.append("content", attachment, attachment.name)
+    const enc_content = await attachment.text()
+      .then(data => this.encryptionService.encrypt(data))
+    const blob = new Blob([enc_content])
+    const enc_name = await this.encryptionService.encrypt(attachment.name)
+    formData.append("content", blob, enc_name)
     const params = new HttpParams().set("note_id", note_id.toString());
-    return this.httpClient.post(environment.backendUrlBase + ATTACHMENT_PATH,formData, {params:params})
+    return this.httpClient.post<Attachment>(environment.backendUrlBase + ATTACHMENT_PATH,formData, {params:params})
+      .toPromise()
+      .then(async data => {
+        data.title = await this.encryptionService.decrypt(data.title)
+        return data
+      })
   }
 
   public deleteAttachment(attachment_id:number):Observable<any>{
