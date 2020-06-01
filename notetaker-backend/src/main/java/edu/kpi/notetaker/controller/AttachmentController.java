@@ -53,11 +53,4 @@ public class AttachmentController {
     public ByteArrayResource getAttachmentContent(@PathVariable("id") Integer id){
         return new ByteArrayResource(attachmentService.getAttachmentContent(id));
     }
-
-    @PreAuthorize("hasAuthority('ROLE_USER')")
-    @PutMapping(value = "/{id}/content", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void updateAttachmentContent(@PathVariable("id") Integer attachmentId,
-                                  @RequestBody MultipartFile content) throws IOException {
-        attachmentService.updateAttachmentContent(attachmentId, content.getBytes());
-    }
 }

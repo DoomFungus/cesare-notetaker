@@ -22,7 +22,7 @@ export class AttachmentsService {
       .then(async data => data.text())
       .then(async data => {
         if(data.length > 0)
-          return this.encryptionService.decrypt(data)
+          return this.encryptionService.decryptBinary(data)
         else return data
       })
       .then(data => new Blob([data]))
@@ -30,8 +30,8 @@ export class AttachmentsService {
 
   public async postAttachment(note_id:number, attachment:File):Promise<Attachment>{
     const formData = new FormData();
-    const enc_content = await attachment.text()
-      .then(data => this.encryptionService.encrypt(data))
+    const enc_content = await attachment.arrayBuffer()
+      .then(data => this.encryptionService.encryptBinary(data))
     const blob = new Blob([enc_content])
     const enc_name = await this.encryptionService.encrypt(attachment.name)
     formData.append("content", blob, enc_name)

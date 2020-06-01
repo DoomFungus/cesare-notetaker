@@ -62,6 +62,20 @@ export class EncryptionService {
       .then(data => this.arrayToBase64(data))
   }
 
+  public async encryptBinary(plaintext: ArrayBuffer) : Promise<string>{
+    const iv = window.crypto.getRandomValues(new Uint8Array(12));
+    const key:CryptoKey = await this.key
+    return window.crypto.subtle.encrypt(
+      {
+        name: "AES-GCM",
+        iv: iv
+      },
+      key,
+      plaintext)
+      .then(data => this.addHeader(iv, data))
+      .then(data => this.arrayToBase64(data))
+  }
+
   public async decrypt(ciphertext: string) : Promise<string>{
     const encCiphertext = this.base64ToArray(ciphertext)
     const [header, body] = this.splitHeader(encCiphertext, 12)
@@ -74,6 +88,19 @@ export class EncryptionService {
       key,
       body)
     .then(data => this.dec.decode(data))
+  }
+
+  public async decryptBinary(ciphertext: string) : Promise<ArrayBuffer>{
+    const encCiphertext = this.base64ToArray(ciphertext)
+    const [header, body] = this.splitHeader(encCiphertext, 12)
+    const key:CryptoKey = await this.key
+    return window.crypto.subtle.decrypt(
+      {
+        name: "AES-GCM",
+        iv: header
+      },
+      key,
+      body)
   }
 
   public async encodeText(text: string) : Promise<Uint8Array>{
