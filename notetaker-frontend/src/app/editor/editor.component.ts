@@ -2,6 +2,7 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import * as ClassicEditor from 'cesare-notetaker-editor-build';
 import {EditorService} from "./editor.service";
 import {Attachment} from "../shared/attachment";
+import {Tag} from "../shared/tag";
 
 @Component({
   selector: 'app-editor',
@@ -13,7 +14,7 @@ export class EditorComponent implements OnInit, OnChanges{
   @Input()
   note_id:number
   attachments: Attachment[]
-  tags
+  tags: Tag[]
 
   public model = {
     editorData: ""
@@ -28,17 +29,20 @@ export class EditorComponent implements OnInit, OnChanges{
     const self = this;
     if (this.note_id !== 0){
       document.getElementById("content_loader").style.display = 'block'
-      this.editorService
-        .getNoteContent(this.note_id.toString())
-        .then(value => {
-          self.model.editorData = value
-          document.getElementById("content_loader").style.display = 'none'
-        })
-      this.editorService
-        .getNote(this.note_id.toString())
-        .then(value => {
-          self.attachments = value.attachments
-        })
+      Promise.all([
+        this.editorService
+          .getNoteContent(this.note_id.toString())
+          .then(value => {
+            self.model.editorData = value
+          }),
+        this.editorService
+          .getNote(this.note_id.toString())
+          .then(value => {
+            self.attachments = value.attachments
+            self.tags = value.tags
+          })
+        ])
+        .then(() => document.getElementById("content_loader").style.display = 'none')
     }
   }
 

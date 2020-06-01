@@ -23,11 +23,11 @@ public class TagController {
 
     @PreAuthorize("hasAuthority('ROLE_USER')")
     @PostMapping
-    public TagOutputMessage saveTag(@RequestParam("user_id") Integer userId,
+    public TagOutputMessage saveTag(@RequestParam("username") String username,
                                               @RequestBody TagInputMessage message){
         return TagOutputMessage
                 .fromTag(tagService
-                        .createTag(userId, message.toTag())
+                        .createTag(username, message.toTag())
                 );
     }
 
@@ -43,8 +43,8 @@ public class TagController {
     @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping()
     public Collection<TagOutputMessage> findTagsByUser(
-            @RequestParam("user_id") Integer userId){
-        return tagService.findByUserId(userId).stream()
+            @RequestParam("username") String username){
+        return tagService.findByUsername(username).stream()
                 .map(TagOutputMessage::fromTag)
                 .collect(Collectors.toCollection(ArrayList::new));
     }

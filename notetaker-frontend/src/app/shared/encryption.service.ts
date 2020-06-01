@@ -103,15 +103,6 @@ export class EncryptionService {
       body)
   }
 
-  public async encodeText(text: string) : Promise<Uint8Array>{
-    const base64text = atob(text)
-    return this.enc.encode(text)
-  }
-
-  public async decodeText(text: Uint8Array) : Promise<string>{
-    return btoa(this.dec.decode(text))
-  }
-
   private addHeader(header: Uint8Array, data: ArrayBuffer): Uint8Array{
     const dataArray = new Uint8Array(data)
     let result = new Uint8Array(header.length + dataArray.length)

@@ -1,4 +1,5 @@
-<div class="editor" role="main">
+<app-tags [active_note_id]="note_id" [tags]="tags"></app-tags>
+<div class="editor" role="main" style="margin-top:45px">
   <ckeditor [(ngModel)]="model.editorData" [editor]="Editor" [config]="ckConfig" data="<p>Hello, world!</p>"></ckeditor>
 </div>
 <div class="fixed-action-btn">

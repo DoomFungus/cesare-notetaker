@@ -36,14 +36,14 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public Collection<Tag> findByUserId(Integer userId) {
-        User user = userService.findById(userId);
+    public Collection<Tag> findByUsername(String username) {
+        User user = userService.findByUsername(username);
         return tagRepository.findAllByUser(user);
     }
 
     @Override
-    public Tag createTag(Integer userId, Tag tag) {
-        User user = userService.findById(userId);
+    public Tag createTag(String username, Tag tag) {
+        User user = userService.findByUsername(username);
         tag.setUser(user);
         tag.setCreationTimestamp(LocalDateTime.now());
         return tagRepository.save(tag);

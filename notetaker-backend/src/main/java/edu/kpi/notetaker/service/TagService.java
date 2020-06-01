@@ -9,7 +9,7 @@ public interface TagService {
 
     Collection<Tag> findByIds(Collection<Integer> tagIds);
 
-    Collection<Tag> findByUserId(Integer userId);
+    Collection<Tag> findByUsername(String username);
 
-    Tag createTag(Integer userId, Tag tag);
+    Tag createTag(String username, Tag tag);
 }

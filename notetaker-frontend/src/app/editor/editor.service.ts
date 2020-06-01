@@ -23,6 +23,9 @@ export class EditorService {
         for (let attachment of data.attachments) {
           attachment.title = await this.encryptionService.decrypt(attachment.title)
         }
+        for (let tag of data.tags) {
+          tag.name = await this.encryptionService.decrypt(tag.name)
+        }
         return data
       })
   }

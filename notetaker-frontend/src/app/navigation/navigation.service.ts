@@ -3,13 +3,11 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {Notebook} from "../shared/notebook";
-import { map } from 'rxjs/operators';
 import {EncryptionService} from "../shared/encryption.service";
 import {Note} from "../shared/note";
 
 const NOTEBOOK_PATH:String = "/notebook"
 const NOTE_PATH:String = "/note"
-
 
 @Injectable()
 export class NavigationService {

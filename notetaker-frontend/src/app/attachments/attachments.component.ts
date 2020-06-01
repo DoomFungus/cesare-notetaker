@@ -32,7 +32,6 @@ export class AttachmentsComponent implements OnInit, OnChanges{
 
   handleAttachmentUpload(event: Event) {
     const file = (<HTMLInputElement>event.target).files[0]
-    console.log(this.parent_note_id)
     const self = this
     this.attachmentsService.postAttachment(this.parent_note_id, file)
        .then(data => {

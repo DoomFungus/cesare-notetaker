@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -60,9 +61,9 @@ public class NoteController {
     }
 
     @PreAuthorize("hasAuthority('ROLE_USER')")
-    @PutMapping(value = "/{id}/tags")
+    @PutMapping(value = "/{id}/tag")
     public void updateNoteTags(@PathVariable("id") Integer noteId,
-                                  @RequestParam(name = "tag_id") Collection<Integer> tagIds) {
+                                  @RequestParam(name = "tag_id") List<Integer> tagIds) {
         noteService.updateTags(noteId, tagIds);
     }
 

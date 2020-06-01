@@ -15,6 +15,7 @@ import { LoginComponent } from './login/login.component';
 import {ApplyTokenInterceptor} from "./shared/apply-token.interceptor";
 import {RefreshTokenInterceptor} from "./shared/refresh-token.interceptor";
 import { AttachmentsComponent } from './attachments/attachments.component';
+import { TagsComponent } from './tags/tags.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AttachmentsComponent } from './attachments/attachments.component';
     HeaderComponent,
     NavigationComponent,
     LoginComponent,
-    AttachmentsComponent
+    AttachmentsComponent,
+    TagsComponent
   ],
   imports: [
     BrowserModule,

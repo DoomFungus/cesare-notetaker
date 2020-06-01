@@ -67,7 +67,7 @@ ClassicEditor.builtinPlugins = [
 // Editor configuration.
 ClassicEditor.defaultConfig = {
 	toolbar: {
-		viewportTopOffset : 60,
+		viewportTopOffset : 105,
 		items: [
 			'heading',
 			'|',

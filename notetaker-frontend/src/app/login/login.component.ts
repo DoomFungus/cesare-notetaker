@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
 import {AuthService} from "../shared/auth.service";
 import {EncryptionService} from "../shared/encryption.service";
+import {TagsService} from "../tags/tags.service";
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,10 @@ import {EncryptionService} from "../shared/encryption.service";
 export class LoginComponent implements OnInit {
 
   loginLoadAnimation: HTMLElement;
-  constructor(private loginService:AuthService, private encryptionService: EncryptionService, @Inject('M') private M: any) { }
+  constructor(private loginService:AuthService,
+              private encryptionService: EncryptionService,
+              private tagService: TagsService,
+              @Inject('M') private M: any) { }
 
   @Output()
   onLoggedInEvent = new EventEmitter<string>()
@@ -51,6 +55,7 @@ export class LoginComponent implements OnInit {
 
   onSuccessfulLogin(username:string, password:string, accessToken:string, refreshToken:string){
     this.onLoggedInEvent.emit(username)
+    this.tagService.setAvailableTags(username)
     this.loginLoadAnimation.style.display = 'none'
     this.encryptionService.setKey(username, password)
     localStorage.setItem("access_token", accessToken)

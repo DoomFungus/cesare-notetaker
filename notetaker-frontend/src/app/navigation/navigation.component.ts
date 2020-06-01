@@ -76,7 +76,7 @@ export class NavigationComponent implements OnInit, OnChanges {
       .postNote(this.active_notebook_id, this.new_note_title)
       .then((note => {
         self.notebooks.find((element) => element.id===self.active_notebook_id)
-          .notes.push({id: note.id, title: note.title, content: "", attachments:[]})
+          .notes.push({id: note.id, title: note.title, content: "", attachments:[], tags:[]})
       }))
   }
 

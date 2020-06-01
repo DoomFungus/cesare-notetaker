@@ -4,6 +4,6 @@
   <app-login (onLoggedInEvent)="onLoggedIn($event)"></app-login>
 </header>
 <main>
-  <app-editor [note_id]="active_note_id"></app-editor>
+  <app-editor id="editor" style="display: none" [note_id]="active_note_id"></app-editor>
 </main>
 <router-outlet></router-outlet>
