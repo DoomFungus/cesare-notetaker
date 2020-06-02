@@ -4,8 +4,7 @@ import {NavigationService} from "./navigation.service";
 
 @Component({
   selector: 'app-navigation',
-  templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.sass'],
+  templateUrl: './navigation.component.html'
 })
 export class NavigationComponent implements OnInit, OnChanges {
 
