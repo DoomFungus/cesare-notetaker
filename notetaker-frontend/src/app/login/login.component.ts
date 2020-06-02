@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
 import {AuthService} from "../shared/auth.service";
 import {EncryptionService} from "../shared/encryption.service";
-import {TagsService} from "../tags/tags.service";
+import {TagsService} from "../shared/tags.service";
 
 @Component({
   selector: 'app-login',

@@ -1,6 +1,6 @@
 import {Component, Inject, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Tag} from "../shared/tag";
-import {TagsService} from "./tags.service";
+import {TagsService} from "../shared/tags.service";
 
 @Component({
   selector: 'app-tags',
@@ -18,21 +18,22 @@ export class TagsComponent implements OnInit, OnChanges {
   constructor(private tagsService:TagsService, @Inject('M') private M: any) { }
 
   ngOnInit(): void {
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
     const self = this
-    document.addEventListener('DOMContentLoaded', function () {
-      const elems = document.querySelectorAll('.chips');
-      self.chip = self.M.Chips.init(elems,
+    if(this.tags !== undefined){
+      if(this.chip)
+        this.chip.destroy()
+      const elems = document.querySelectorAll('.tags-chips');
+      this.chip = self.M.Chips.init(elems,
         {
           placeholder: "Enter tags",
           onChipAdd: self.onAddTag.bind(self),
           onChipDelete: self.onRemoveTag.bind(self)
         })[0];
-    });
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if(this.tags !== undefined)
       this.tags.map(tag => tag.name).map(tag_name => this.chip.addChip({tag: tag_name}))
+    }
   }
 
   onAddTag(chips, chip){
@@ -70,7 +71,4 @@ export class TagsComponent implements OnInit, OnChanges {
     this.tagsService.updateTags(this.tags.map(tag => tag.id),
       this.active_note_id)
   }
-
-
-
 }

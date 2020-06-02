@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {EncryptionService} from "../shared/encryption.service";
+import {EncryptionService} from "./encryption.service";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
-import {Tag} from "../shared/tag";
+import {Tag} from "./tag";
+import {Note} from "./note";
 
 const TAG_PATH:String = "/tag"
 const NOTE_PATH:String = "/note"
@@ -58,5 +59,21 @@ export class TagsService {
       environment.backendUrlBase + NOTE_PATH + "/" + note_id.toString() + TAG_PATH,
       null,{params:params})
       .toPromise()
+  }
+
+  public async findNotesByTags(tag_ids:number[]):Promise<Note[]>{
+    let params = new HttpParams()
+    for (const tag_id of tag_ids){
+      params = params.append("tag_id", tag_id.toString());
+    }
+    return this.httpClient.get<Note[]>(
+      environment.backendUrlBase + NOTE_PATH, {params:params})
+      .toPromise()
+      .then(async data => {
+        for (let note of data) {
+          note.title = await this.encryptionService.decrypt(note.title)
+        }
+        return data
+      })
   }
 }

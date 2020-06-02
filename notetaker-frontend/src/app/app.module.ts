@@ -16,6 +16,7 @@ import {ApplyTokenInterceptor} from "./shared/apply-token.interceptor";
 import {RefreshTokenInterceptor} from "./shared/refresh-token.interceptor";
 import { AttachmentsComponent } from './attachments/attachments.component';
 import { TagsComponent } from './tags/tags.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { TagsComponent } from './tags/tags.component';
     NavigationComponent,
     LoginComponent,
     AttachmentsComponent,
-    TagsComponent
+    TagsComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

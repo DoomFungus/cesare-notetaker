@@ -1,0 +1,15 @@
+<a href="#" data-target="search-modal" class="modal-trigger" (click)="loadAutocomplete()">
+  <i class="material-icons">search</i>
+</a>
+<div id="search-modal" class="modal search-modal">
+  <div class="modal-content">
+    <h4>Search</h4>
+    <div class="chips search-chips chips-autocomplete"></div>
+    <div class="row" style="margin-top: 10px">
+      <a class="btn right" (click)="searchByTags()">Search</a>
+    </div>
+    <ul class="collection">
+      <li class="collection-item width-parent-flex modal-close" *ngFor="let note of foundNotes" (click)="onNoteClick(note.id, note.title)">{{note.title}}</li>
+    </ul>
+  </div>
+</div>

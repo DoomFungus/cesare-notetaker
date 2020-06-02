@@ -56,7 +56,7 @@ public class NoteController {
     public Collection<NoteOutputMessage> findNotesByTags(
             @RequestParam("tag_id") Collection<Integer> tagIds){
         return noteService.findByTagIds(tagIds).stream()
-                .map(NoteOutputMessage::fromNote)
+                .map(NoteOutputMessage::identificationFromNote)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
