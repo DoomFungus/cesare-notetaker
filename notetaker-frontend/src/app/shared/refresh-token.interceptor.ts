@@ -1,10 +1,5 @@
-import { Injectable } from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor, HttpClient, HttpHeaders, HttpErrorResponse
-} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable, Subscriber} from 'rxjs';
 import {environment} from "../../environments/environment";
 import {AuthService} from "./auth.service";
@@ -24,8 +19,7 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
   private noAuthorization:Array<string> = [
     environment.backendUrlBase+"/signin",
     environment.backendUrlBase+"/signup",
-    environment.backendUrlBase+"/refresh",
-    environment.backendUrlBase+"/signout"
+    environment.backendUrlBase+"/refresh"
   ]
 
   constructor(private httpClient: HttpClient, private authService: AuthService) {}
@@ -73,7 +67,7 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
         },
 
           (err) => {
-            this.authService.logout();
+            window.location.reload()
           });
     }
   }

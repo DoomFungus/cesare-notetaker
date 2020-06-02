@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AuthService} from "../shared/auth.service";
 
 @Component({
   selector: 'app-header',
@@ -13,12 +14,17 @@ export class HeaderComponent implements OnInit {
   @Output()
   onNoteClickEvent = new EventEmitter<[number, string]>()
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
   }
 
   onNoteClick(event: [number, string]){
     this.onNoteClickEvent.emit(event)
+  }
+
+  logout(){
+    this.authService.logout()
+    window.location.reload()
   }
 }

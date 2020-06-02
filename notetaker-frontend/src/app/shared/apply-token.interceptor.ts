@@ -1,11 +1,6 @@
-import { Injectable } from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor
-} from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import {environment} from "../../environments/environment";
 
 @Injectable()
@@ -14,8 +9,7 @@ export class ApplyTokenInterceptor implements HttpInterceptor {
   private noAuthorization:Array<string> = [
     environment.backendUrlBase+"/signin",
     environment.backendUrlBase+"/signup",
-    environment.backendUrlBase+"/refresh",
-    environment.backendUrlBase+"/signout"
+    environment.backendUrlBase+"/refresh"
   ]
 
   constructor() {}
