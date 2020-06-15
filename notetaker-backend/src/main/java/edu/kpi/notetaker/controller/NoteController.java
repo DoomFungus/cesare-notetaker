@@ -63,7 +63,8 @@ public class NoteController {
     @PreAuthorize("hasAuthority('ROLE_USER')")
     @PutMapping(value = "/{id}/tag")
     public void updateNoteTags(@PathVariable("id") Integer noteId,
-                                  @RequestParam(name = "tag_id") List<Integer> tagIds) {
+                                  @RequestParam(name = "tag_id", required = false) List<Integer> tagIds) {
+        if(tagIds == null) tagIds =  new ArrayList<>();
         noteService.updateTags(noteId, tagIds);
     }
 
