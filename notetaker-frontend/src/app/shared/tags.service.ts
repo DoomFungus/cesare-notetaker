@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {EncryptionService} from "./encryption.service";
 import {environment} from "../../environments/environment";
@@ -14,7 +14,7 @@ const NOTE_PATH:String = "/note"
 })
 export class TagsService {
 
-  public available_tags: Promise<Tag[]>
+  private available_tags: Promise<Tag[]>
   private username: string
   constructor(private httpClient: HttpClient, private encryptionService: EncryptionService) { }
 
@@ -33,10 +33,15 @@ export class TagsService {
     this.available_tags = tags
   }
 
+  public getAvailableTags():Promise<Tag[]>{
+    return this.available_tags
+  }
+
   public async postTag(tag_name:string):Promise<Tag>{
+    const self = this
     const new_tag = {name: await this.encryptionService.encrypt(tag_name)}
     const params = new HttpParams().set("username", this.username);
-    return this.httpClient.post<Tag>(environment.backendUrlBase + TAG_PATH,
+    const tagPromise = this.httpClient.post<Tag>(environment.backendUrlBase + TAG_PATH,
       new_tag, {params:params})
       .toPromise()
       .then(async data => {
@@ -44,6 +49,13 @@ export class TagsService {
           return data
         }
       )
+    this.available_tags = Promise.all<Tag[], Tag>([this.available_tags, tagPromise])
+      .then<Tag[]>(values => {
+          values[0].push(values[1])
+          return values[0]
+        }
+      )
+    return tagPromise
   }
 
   public deleteTag(tag_id:number):Observable<any>{

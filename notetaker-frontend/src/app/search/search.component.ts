@@ -30,7 +30,7 @@ export class SearchComponent implements OnInit {
   loadAutocomplete(){
     const self = this
     const elems = document.querySelectorAll('.search-chips');
-    self.tagsService.available_tags.then(tags => {
+    self.tagsService.getAvailableTags().then(tags => {
         self.chip = self.M.Chips.init(elems,
           {
             placeholder: "Enter tags",
@@ -51,7 +51,7 @@ export class SearchComponent implements OnInit {
   searchByTags(){
     let textData = {}
     this.chip.chipsData.map(data => textData[data.tag] = null)
-    this.tagsService.available_tags
+    this.tagsService.getAvailableTags()
       .then(tags => tags.filter(tag => textData[tag.name] !== undefined))
       .then(tags => this.tagsService.findNotesByTags(tags.map(tag => tag.id)))
       .then(data => this.foundNotes = data)

@@ -41,7 +41,7 @@ export class TagsComponent implements OnInit, OnChanges {
     const chipText = chip.textContent.slice(0, -5)
     if(self.tags.find(tag => tag.name === chipText))
       return
-    this.tagsService.available_tags
+    this.tagsService.getAvailableTags()
       .then(tags =>
         tags.find(tag => tag.name === chipText))
       .then(tag => {
